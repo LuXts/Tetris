@@ -1,7 +1,6 @@
+#include "pch.h"
 #include "GameManager.h"
-#include "framework.h"
 #include <ctime>
-
 
 //初始化下一个方块
 void GameManager::InitNextBrick()
