@@ -198,6 +198,7 @@
     <ClInclude Include="CGameDlg.h" />
     <ClInclude Include="Bricks.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="GameProcess.h" />
     <ClInclude Include="GameSDL.h" />
     <ClInclude Include="Log.h" />
     <ClInclude Include="GameManager.h" />
@@ -210,6 +211,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CGameDlg.cpp" />
+    <ClCompile Include="GameProcess.cpp" />
     <ClCompile Include="GameSDL.cpp" />
     <ClCompile Include="Log.cpp" />
     <ClCompile Include="Bricks.cpp" />
