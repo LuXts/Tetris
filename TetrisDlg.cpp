@@ -1,5 +1,4 @@
-﻿
-// TetrisDlg.cpp: 实现文件
+﻿// TetrisDlg.cpp: 实现文件
 //
 
 #include "pch.h"
@@ -8,47 +7,16 @@
 #include "TetrisDlg.h"
 #include "afxdialogex.h"
 
+#include "CGameDlg.h"
+#include "Log.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
-
 // 用于应用程序“关于”菜单项的 CAboutDlg 对话框
 
-class CAboutDlg : public CDialogEx
-{
-public:
-	CAboutDlg();
-
-// 对话框数据
-#ifdef AFX_DESIGN_TIME
-	enum { IDD = IDD_ABOUTBOX };
-#endif
-
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
-
-// 实现
-protected:
-	DECLARE_MESSAGE_MAP()
-};
-
-CAboutDlg::CAboutDlg() : CDialogEx(IDD_ABOUTBOX)
-{
-}
-
-void CAboutDlg::DoDataExchange(CDataExchange* pDX)
-{
-	CDialogEx::DoDataExchange(pDX);
-}
-
-BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
-END_MESSAGE_MAP()
-
-
 // CTetrisDlg 对话框
-
-
 
 CTetrisDlg::CTetrisDlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_TETRIS_DIALOG, pParent)
@@ -62,11 +30,12 @@ void CTetrisDlg::DoDataExchange(CDataExchange* pDX)
 }
 
 BEGIN_MESSAGE_MAP(CTetrisDlg, CDialogEx)
-	ON_WM_SYSCOMMAND()
+	//	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_WM_HELPINFO()
+	ON_BN_CLICKED(IDC_START_BUTTON, &CTetrisDlg::OnBnClickedStartButton)
 END_MESSAGE_MAP()
-
 
 // CTetrisDlg 消息处理程序
 
@@ -99,23 +68,23 @@ BOOL CTetrisDlg::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// 设置大图标
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
+	lena::Log::init(lena::LOG_LEVEL_WANING, lena::LOG_TARGET_FILE);
+
 	// TODO: 在此添加额外的初始化代码
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
 
-void CTetrisDlg::OnSysCommand(UINT nID, LPARAM lParam)
-{
-	if ((nID & 0xFFF0) == IDM_ABOUTBOX)
-	{
-		CAboutDlg dlgAbout;
-		dlgAbout.DoModal();
-	}
-	else
-	{
-		CDialogEx::OnSysCommand(nID, lParam);
-	}
-}
+//void CTetrisDlg::OnSysCommand(UINT nID, LPARAM lParam)
+//{
+//	if ((nID & 0xFFF0) == IDM_ABOUTBOX)
+//	{
+//	}
+//	else
+//	{
+//		CDialogEx::OnSysCommand(nID, lParam);
+//	}
+//}
 
 // 如果向对话框添加最小化按钮，则需要下面的代码
 //  来绘制该图标。  对于使用文档/视图模型的 MFC 应用程序，
@@ -153,3 +122,17 @@ HCURSOR CTetrisDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+BOOL CTetrisDlg::OnHelpInfo(HELPINFO* pHelpInfo)
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+
+	return true;
+}
+
+void CTetrisDlg::OnBnClickedStartButton()
+{
+	CGameDlg dlg;
+	this->OnOK();
+	dlg.DoModal();
+	// TODO: 在此添加控件通知处理程序代码
+}
