@@ -10,6 +10,8 @@ private:
 	SDL_Renderer* _ren;
 	SDL_Texture* _tex;
 
+	int w, h;
+
 public:
 	//创建游戏界面
 	GameSDL(void*);
@@ -21,4 +23,10 @@ public:
 	static void QuitGame();
 
 	//以下为提供的接口
+	//清空画布
+	void RendererClear();
+	//添加正方形
+	void MapAddBrick(int x, int y);
+	//显示画布
+	void RendererPresent();
 };

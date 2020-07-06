@@ -33,7 +33,7 @@
     <ClInclude Include="pch.h">
       <Filter>头文件</Filter>
     </ClInclude>
-     <ClInclude Include="CGameDlg.h">
+    <ClInclude Include="CGameDlg.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="GameSDL.h">
@@ -71,7 +71,7 @@
     <ClCompile Include="Log.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-     <ClCompile Include="Bricks.cpp">
+    <ClCompile Include="Bricks.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="GameManager.cpp">
