@@ -68,7 +68,7 @@ BOOL CTetrisDlg::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// 设置大图标
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
-	lena::Log::init(lena::LOG_LEVEL_WANING, lena::LOG_TARGET_FILE);
+	lena::Log::init(lena::LOG_LEVEL_DEBUG, lena::LOG_TARGET_FILE);
 
 	// TODO: 在此添加额外的初始化代码
 

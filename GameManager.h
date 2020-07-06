@@ -7,11 +7,6 @@ using namespace std;
 #define HeightBySquare 20		//背景长20个方块
 #define WidthBySquare  10		//背景宽10个方块
 
-#define SquarePX 24		//单个方块所占像素
-
-#define HegithByPX HeightBySquare*SquarePX		//背景长
-#define WidthByPX WidthBySquare*SquarePX		//背景宽
-
 #define Time_Interval 500	//方块下落间隔时间
 
 enum GameState {
@@ -30,12 +25,14 @@ public:
 
 	point centre;			//中心点
 	int brickType;			//方块的种类
-	int brickState;		//方块的状态
+	int brickState;			//方块的旋转状态
 	int brickNext;			//下一个方块
 
 
 	int score;				//分数
 	int interTime;			//下落间隔时间
+
+	GameManager();
 
 	BOOL MoveDown();		//方块下移
 	BOOL RotateTop();		//方块旋转
@@ -43,7 +40,11 @@ public:
 	BOOL MoveRight();		//方块右移
 
 
-	BOOL knockCheck(point p, Bricks d);		//碰撞检测
+	BOOL LeftCheck(point p, Bricks d);		//左边碰撞检测
+	BOOL RightCheck(point p, Bricks d);		//右边碰撞检测
+	BOOL BelowCheck(point p, Bricks d);		//下方碰撞检测
+	BOOL TopCheck(point p, Bricks d);		//上方碰撞检测
+	BOOL RotateCheck(point p, Bricks d);	//旋转碰撞检测
 
 	void FixBricks();		//确定当前方块位置，写入地图
 

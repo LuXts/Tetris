@@ -35,6 +35,5 @@ BOOL CGameDlg::DestroyWindow()
 {
 	// TODO: 在此添加专用代码和/或调用基类
 	LOG(lena::LOG_LEVEL_DEBUG, "GameDlg Destroy!");
-	printf("GameDlg Destroy!");
 	return CDialogEx::DestroyWindow();
 }

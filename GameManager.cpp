@@ -2,6 +2,31 @@
 #include "GameManager.h"
 #include <ctime>
 
+
+GameManager::GameManager()
+{
+	for (int i = 0; i < WidthBySquare; i++)
+	{
+		for (int j = 0; j < HeightBySquare; j++)
+		{
+			bcgSquare[i][j].x = i;
+			bcgSquare[i][j].y = j;
+		}
+	}
+
+	//下一个方块
+	for (int i = 0; i <= 3; i++)
+	{
+		for (int j = 0; j <= 4; j++)
+		{
+			nextSquare[i][j].x = i;
+			nextSquare[i][j].y = j;
+		}
+	}
+
+}
+
+
 //初始化下一个方块
 void GameManager::InitNextBrick()
 {
@@ -46,22 +71,97 @@ void GameManager::FixBricks()
 	}
 }
 
-//碰撞检测
-BOOL GameManager::knockCheck(point p, Bricks d)
+//左边碰撞检测
+BOOL GameManager::LeftCheck(point p, Bricks d)
 {
 	for (int i = 0; i < 4; i++)//对每个小方块分别进行检查
 	{
-		//方块碰撞检查
+		//左边是否为被写入地图的方块
+		if (bcgSquare[p.x + d.p[i].x - 1][p.y + d.p[i].y].state)
+		{
+			return true;
+		}
+
+		//左边是否为墙
+		if (p.x + d.p[i].x >= WidthBySquare || p.x + d.p[i].x - 1 < 0)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+//右边碰撞检测
+BOOL GameManager::RightCheck(point p, Bricks d)
+{
+	for (int i = 0; i < 4; i++)//对每个小方块分别进行检查
+	{
+		//右边是否为被写入地图的方块
+		if (bcgSquare[p.x + d.p[i].x + 1][p.y + d.p[i].y].state)
+		{
+			return true;
+		}
+
+		//右边是否为墙
+		if (p.x + d.p[i].x + 1>= WidthBySquare)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+//下边碰撞检测
+BOOL GameManager::BelowCheck(point p, Bricks d)
+{
+	for (int i = 0; i < 4; i++)//对每个小方块分别进行检查
+	{
+		//下边是否为被写入地图的方块
+		if (bcgSquare[p.x + d.p[i].x][p.y + d.p[i].y + 1].state)
+		{
+			return true;
+		}
+
+		//下边是否为墙
+		if (p.y + d.p[i].y + 1 >= HeightBySquare)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+//上边碰撞检测
+BOOL GameManager::TopCheck(point p, Bricks d)
+{
+	for (int i = 0; i < 4; i++)//对每个小方块分别进行检查
+	{
+		//上边是否为墙
+		if (p.y + d.p[i].y == 0)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+//旋转碰撞检测
+BOOL GameManager::RotateCheck(point p, Bricks d)
+{
+	for (int i = 0; i < 4; i++)//对每个小方块分别进行检查
+	{
+		//方块碰撞检测
 		if (bcgSquare[p.x + d.p[i].x ][p.y + d.p[i].y].state)
 		{
 			return true;
 		}
-		
+
+		//墙碰撞检测
 		if (p.x + d.p[i].x >= WidthBySquare || p.x + d.p[i].x < 0)
 		{
 			return true;
 		}
-		if (p.y + d.p[i].y >= HeightBySquare)
+		if (p.y + d.p[i].y >= HeightBySquare )
 		{
 			return true;
 		}
@@ -72,7 +172,7 @@ BOOL GameManager::knockCheck(point p, Bricks d)
 //方块下移
 BOOL GameManager::MoveDown()
 {
-	if (!knockCheck(point(centre.x, centre.y + 1),bricks[brickType][brickState]))
+	if (!BelowCheck(point(centre.x, centre.y + 1),bricks[brickType][brickState]))
 	{
 		centre.set(centre.x, centre.y + 1);
 
@@ -81,19 +181,21 @@ BOOL GameManager::MoveDown()
 	return false;
 }
 
-//方块左右移动
+//方块左移
 BOOL GameManager::MoveLeft()
 {
-	if (!knockCheck(point(centre.x - 1, centre.y), bricks[brickType][brickState]))
+	if (!LeftCheck(point(centre.x - 1, centre.y), bricks[brickType][brickState]))
 	{
 		centre.set(centre.x - 1, centre.y);
 		return true;
 	}
 	return false;
 }
+
+//方块右移
 BOOL GameManager::MoveRight()
 {
-	if (!knockCheck(point(centre.x + 1, centre.y), bricks[brickType][brickState]))
+	if (!RightCheck(point(centre.x + 1, centre.y), bricks[brickType][brickState]))
 	{
 		centre.set(centre.x + 1, centre.y);
 		return true;
@@ -104,7 +206,7 @@ BOOL GameManager::MoveRight()
 //旋转
 BOOL GameManager::RotateTop()
 {
-	if (!knockCheck(centre, bricks[brickType][(brickState + 1) % 4]))
+	if (!RotateCheck(centre, bricks[brickType][(brickState + 1) % 4]))
 	{
 		brickState = (brickState + 1) % 4;
 
