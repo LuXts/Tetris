@@ -1,5 +1,4 @@
-﻿
-// Tetris.cpp: 定义应用程序的类行为。
+﻿// Tetris.cpp: 定义应用程序的类行为。
 //
 
 #include "pch.h"
@@ -7,17 +6,17 @@
 #include "Tetris.h"
 #include "TetrisDlg.h"
 
+#include "Log.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
-
 
 // CTetrisApp
 
 BEGIN_MESSAGE_MAP(CTetrisApp, CWinApp)
 	ON_COMMAND(ID_HELP, &CWinApp::OnHelp)
 END_MESSAGE_MAP()
-
 
 // CTetrisApp 构造
 
@@ -30,11 +29,9 @@ CTetrisApp::CTetrisApp()
 	// 将所有重要的初始化放置在 InitInstance 中
 }
 
-
 // 唯一的 CTetrisApp 对象
 
 CTetrisApp theApp;
-
 
 // CTetrisApp 初始化
 
@@ -52,12 +49,13 @@ BOOL CTetrisApp::InitInstance()
 
 	CWinApp::InitInstance();
 
+	lena::Log::init(lena::LOG_LEVEL_DEBUG, lena::LOG_TARGET_FILE);
 
 	AfxEnableControlContainer();
 
 	// 创建 shell 管理器，以防对话框包含
 	// 任何 shell 树视图控件或 shell 列表视图控件。
-	CShellManager *pShellManager = new CShellManager;
+	CShellManager* pShellManager = new CShellManager;
 
 	// 激活“Windows Native”视觉管理器，以便在 MFC 控件中启用主题
 	CMFCVisualManager::SetDefaultManager(RUNTIME_CLASS(CMFCVisualManagerWindows));
@@ -69,7 +67,7 @@ BOOL CTetrisApp::InitInstance()
 	// 更改用于存储设置的注册表项
 	// TODO: 应适当修改该字符串，
 	// 例如修改为公司或组织名
-	SetRegistryKey(_T("应用程序向导生成的本地应用程序"));
+	SetRegistryKey(_T("MFC practice test. "));
 
 	CTetrisDlg dlg;
 	m_pMainWnd = &dlg;
@@ -105,3 +103,9 @@ BOOL CTetrisApp::InitInstance()
 	return FALSE;
 }
 
+int CTetrisApp::ExitInstance()
+{
+	// TODO: 在此添加专用代码和/或调用基类
+
+	return CWinApp::ExitInstance();
+}

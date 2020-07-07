@@ -342,3 +342,5 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+/res/brick_2.png.bak
+/res/Tetris.ico.bak

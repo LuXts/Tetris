@@ -68,7 +68,6 @@ BOOL CTetrisDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
 	lena::Log::init(lena::LOG_LEVEL_DEBUG, lena::LOG_TARGET_FILE);
-	GameSDL::InitGame();
 
 	// TODO: 在此添加额外的初始化代码
 
