@@ -2,8 +2,11 @@
 
 #include "GameProcess.h"
 #include "GameManager.h"
+#include "SingleSquare.h"
 #include "Bricks.h"
 #include <afxwin.h>
+#include "CGlobe.h"
+
 
 /*一个线程：用于接收键盘消息并进行相关方块操作*/
 BOOL GameProcess::TranslateMessage(MSG* pMSG) {
@@ -66,14 +69,54 @@ UINT GameProcess::BeginGame(LPVOID param) {
 void GameProcess::OnBnClickBegin() {
 	//CWinThread* AfxBeginThread(GameProcess::BeginGame, (LPVOID)this);
 }
-void GameProcess::DrawMap(int x,int y,int type,int state) {
+void GameProcess::DrawMap(int x,int y,int type,int state,SingleSquare bcgSquare[WidthBySquare][HeightBySquare + 4]) {
 	GameDraw->MainRendererClear();
 	GameDraw->MainAddBrick(x + bricks[type][state].p[0].x, x + bricks[type][state].p[0].y);
 	GameDraw->MainAddBrick(x+bricks[type][state].p[1].x,x+bricks[type][state].p[1].y);
 	GameDraw->MainAddBrick(x + bricks[type][state].p[2].x, x + bricks[type][state].p[2].y);
 	GameDraw->MainAddBrick(x + bricks[type][state].p[3].x, x + bricks[type][state].p[3].y);
 	for (int i = 0;i < HeightBySquare;i++) {
-		
+		for (int j = 4;j < WidthBySquare;i++) {
+			if (bcgSquare[i][j].state==1) {
+				GameDraw->MainAddBrick(i,j-4);
+			}
+		}
 	}
 	GameDraw->MainRendererPresent();
+}
+BOOL GameProcess::Around() {
+	if (Globe.KEY_UP==TRUE) {
+		TetrisManger.RotateTop();
+	}
+	if (Globe.KEY_LEFT==TRUE) {
+		TetrisManger.MoveLeft();
+	}
+	if (Globe.KEY_RIGHT==TRUE) {
+		TetrisManger.MoveRight();
+	}
+	if (Globe.KEY_DOWN==TRUE) {
+		if (!TetrisManger.MoveDown()) {
+			TetrisManger.FixBricks();
+			score = score + (TetrisManger.RowCheck()* TetrisManger.RowCheck()) * Singlescore;
+			n = 0;
+			DrawMap(-5,-5,1,1,TetrisManger.bcgSquare);
+			return TRUE;
+		}
+	}
+	n=n+1;
+	if (n==30) {
+		if (!TetrisManger.MoveDown()) {
+			TetrisManger.FixBricks();
+			score = score + (TetrisManger.RowCheck() * TetrisManger.RowCheck()) * Singlescore;
+			n = 0;
+			DrawMap(-5, -5, 1, 1, TetrisManger.bcgSquare);
+			return TRUE;
+		}
+	}
+	DrawMap(TetrisManger.centre.x,TetrisManger.centre.y,TetrisManger.brickType,TetrisManger.brickState, TetrisManger.bcgSquare);
+	return TRUE;
+}
+void GameProcess::BeginGame() {
+	TetrisManger.NewGame();
+	TetrisManger.NewRound();
 }

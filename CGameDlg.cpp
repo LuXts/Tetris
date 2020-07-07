@@ -98,7 +98,7 @@ void CGameDlg::OnBnClickedButton1()
 
 	// TODO: 在此添加控件通知处理程序代码
 	GameProcess A(_Game);
-	A.DrawMap(2, 1, 0, 1);
+	//A.DrawMap(1, 1, 1, 1);
 
 }
 
