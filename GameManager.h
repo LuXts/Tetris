@@ -19,7 +19,7 @@ enum GameState {
 class GameManager {
 public:
 	SingleSquare bcgSquare[WidthBySquare][HeightBySquare];		//背景方块
-	SingleSquare nextSquare[4][5];		//下一个方块
+	SingleSquare nextSquare[4][4];		//下一个方块
 
 	GameState gameState;		//游戏状态
 

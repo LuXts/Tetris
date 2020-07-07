@@ -17,7 +17,7 @@ GameManager::GameManager()
 	//下一个方块
 	for (int i = 0; i <= 3; i++)
 	{
-		for (int j = 0; j <= 4; j++)
+		for (int j = 0; j <= 3; j++)
 		{
 			nextSquare[i][j].x = i;
 			nextSquare[i][j].y = j;
