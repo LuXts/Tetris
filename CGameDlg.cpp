@@ -7,7 +7,7 @@
 #include "afxdialogex.h"
 
 #include "Log.h"
-
+#include"GameProcess.h"
 // CGameDlg 对话框
 
 IMPLEMENT_DYNAMIC(CGameDlg, CDialogEx)
@@ -43,6 +43,7 @@ BOOL CGameDlg::DestroyWindow()
 {
 	// TODO: 在此添加专用代码和/或调用基类
 	delete _Game;
+	delete _GProcess;
 	LOG(lena::LOG_LEVEL_DEBUG, "GameDlg Destroy!");
 	return CDialogEx::DestroyWindow();
 }
@@ -50,6 +51,7 @@ BOOL CGameDlg::DestroyWindow()
 BOOL CGameDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
+
 
 	HICON m_hIcon = AfxGetApp()->LoadIconW(IDR_MAINFRAME);
 	SetIcon(m_hIcon, TRUE);			// 设置大图标
@@ -62,6 +64,8 @@ BOOL CGameDlg::OnInitDialog()
 	MoveWindow(rect.left, rect.top, rect.Width(), rect.Height() - 50);
 
 	_Game = new GameSDL(GameArea.GetSafeHwnd(), NextArea.GetSafeHwnd());
+	_GProcess = new GameProcess(_Game);
+	
 	// TODO:  在此添加额外的初始化
 
 	return TRUE;  // return TRUE unless you set the focus to a control
@@ -70,10 +74,10 @@ BOOL CGameDlg::OnInitDialog()
 
 void CGameDlg::OnBnClickedButton1()
 {
-	static int x = 0, y = 0;
-	/*
+	/*static int x = 0, y = 0;
+	
 
-	*/
+	
 	_Game->MainRendererClear();
 
 	_Game->MainAddBrick(x, y);
@@ -90,8 +94,12 @@ void CGameDlg::OnBnClickedButton1()
 	x++;
 	y++;
 	x = x % 10;
-	y = y % 10;
+	y = y % 10;*/
+
 	// TODO: 在此添加控件通知处理程序代码
+	GameProcess A(_Game);
+	A.DrawMap(2, 1, 0, 1);
+
 }
 
 HBRUSH CGameDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)

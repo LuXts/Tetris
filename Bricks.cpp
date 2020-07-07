@@ -35,6 +35,7 @@ Bricks bricks[][4] = {
 	{//LÐÎ
 		Bricks(point(0, 1), point(0, 0), point(0, -1), point(1, -1)),
 		Bricks(point(-1, -1), point(-1, 0), point(0, 0), point(1, 0)),
+
 		Bricks(point(0, -1), point(0, 0), point(0, 1), point(-1, 1)),
 		Bricks(point(-1, 0), point(0, 0), point(1, 0), point(1, 1))	
 	},
