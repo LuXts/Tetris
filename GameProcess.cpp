@@ -1,59 +1,67 @@
+ï»¿#include "pch.h"
+
 #include "GameProcess.h"
 #include "GameManager.h"
 #include <afxwin.h>
 
-/*Ò»¸öÏß³Ì£ºÓÃÓÚ½ÓÊÕ¼üÅÌÏûÏ¢²¢½øĞĞÏà¹Ø·½¿é²Ù×÷*/
+/*ä¸€ä¸ªçº¿ç¨‹ï¼šç”¨äºæ¥æ”¶é”®ç›˜æ¶ˆæ¯å¹¶è¿›è¡Œç›¸å…³æ–¹å—æ“ä½œ*/
 BOOL GameProcess::TranslateMessage(MSG* pMSG) {
-	if (pMSG->message==WM_KEYDOWN) {
-		switch (pMSG->wParam) 
+	if (pMSG->message == WM_KEYDOWN) {
+		switch (pMSG->wParam)
 		{
 		case VK_UP:
 			if (TetrisManger.RotateTop()) {
-				/*´ËÊ±Îª»æÖÆÒ»´ÎµØÍ¼*/
+				/*æ­¤æ—¶ä¸ºç»˜åˆ¶ä¸€æ¬¡åœ°å›¾*/
 				break;
 			}
 		case VK_DOWN:
 			if (TetrisManger.MoveDown()) {
-				/*´ËÊ±Îª»æÖÆÒ»´ÎµØÍ¼*/
+				/*æ­¤æ—¶ä¸ºç»˜åˆ¶ä¸€æ¬¡åœ°å›¾*/
 				break;
 			}
 		case VK_LEFT:
 			if (TetrisManger.MoveLeft()) {
-				/*´ËÊ±Îª»æÖÆÒ»´ÎµØÍ¼*/
+				/*æ­¤æ—¶ä¸ºç»˜åˆ¶ä¸€æ¬¡åœ°å›¾*/
 				break;
 			}
 		case VK_RIGHT:
 			if (TetrisManger.MoveRight()) {
-				/*´ËÊ±Îª»æÖÆÒ»´ÎµØÍ¼*/
+				/*æ­¤æ—¶ä¸ºç»˜åˆ¶ä¸€æ¬¡åœ°å›¾*/
 				break;
 			}
 		default:
 			break;
 		}
 	}
+	return TRUE;
 }
 UINT GameProcess::BeginGame(LPVOID param) {
 	GameProcess* ptask = (GameProcess*)param;
 	while (1) {
-		ptask->TetrisManger.NewRound();//Ëæ»ú²úÉúÒ»¸ö·½¿é£»
-		/*´Ë´¦Îª»æÖÆÓÒ±ßÌáÊ¾À¸¡°ÏÂÒ»¸ö·½¿é¡±*/
-		/*´Ë´¦Îª»æÖÆ´ËÊ±µÄµØÍ¼£¨·½¿é³öÏÖÔÚÆÁÄ»ÉÏ£©*/
+		ptask->TetrisManger.NewRound();//éšæœºäº§ç”Ÿä¸€ä¸ªæ–¹å—ï¼›
+		/*æ­¤å¤„ä¸ºç»˜åˆ¶å³è¾¹æç¤ºæ â€œä¸‹ä¸€ä¸ªæ–¹å—â€*/
+		/*æ­¤å¤„ä¸ºç»˜åˆ¶æ­¤æ—¶çš„åœ°å›¾ï¼ˆæ–¹å—å‡ºç°åœ¨å±å¹•ä¸Šï¼‰*/
 		Sleep(500);
-		while (/*¼ì²âÊÇ·ñµ½´ïµ×¶Ë*/) {
-			ptask->TetrisManger.MoveDown();//ÏòÏÂÒÆ¶¯Ò»¸ñ
-			/*´Ë´¦Îª»æÖÆ´ËÊ±µÄµØÍ¼*/
-			Sleep(500);
+		/*
+		//æ£€æµ‹æ˜¯å¦åˆ°è¾¾åº•ç«¯
+		while ( ) {
+		ptask->TetrisManger.MoveDown();//å‘ä¸‹ç§»åŠ¨ä¸€æ ¼
+		//æ­¤å¤„ä¸ºç»˜åˆ¶æ­¤æ—¶çš„åœ°å›¾
+		Sleep(500);
 		}
-		if (/*¼ì²âÊÇ·ñµ½´ïµ×¶Ë*/) {
-			ptask->TetrisManger.FixBricks();//½«·½¿éĞ´ÈëµØÍ¼
-			ptask->TetrisManger.RowCheck();//¼ì²âÊÇ·ñ³ÉĞĞÏûÈ¥
+		//æ£€æµ‹æ˜¯å¦åˆ°è¾¾åº•ç«¯
+		if () {
+			ptask->TetrisManger.FixBricks();//å°†æ–¹å—å†™å…¥åœ°å›¾
+			ptask->TetrisManger.RowCheck();//æ£€æµ‹æ˜¯å¦æˆè¡Œæ¶ˆå»
 		}
-		if (/*¼ì²âÊÇ·ñµ½´ï¶¥²¿*/){
+		///*æ£€æµ‹æ˜¯å¦åˆ°è¾¾é¡¶éƒ¨
+		if () {
 			return 0;
 		}
+		*/
 	}
 	return 0;
 }
 void GameProcess::OnBnClickBegin() {
-	CWinThread* AfxBeginThread( GameProcess::BeginGame,(LPVOID)this);
+	//CWinThread* AfxBeginThread(GameProcess::BeginGame, (LPVOID)this);
 }
