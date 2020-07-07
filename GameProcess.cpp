@@ -117,6 +117,5 @@ BOOL GameProcess::Around() {
 	return TRUE;
 }
 void GameProcess::BeginGame() {
-	TetrisManger.NewGame();
-	TetrisManger.NewRound();
+
 }
