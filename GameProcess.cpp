@@ -2,6 +2,7 @@
 
 #include "GameProcess.h"
 #include "GameManager.h"
+#include "Bricks.h"
 #include <afxwin.h>
 
 /*一个线程：用于接收键盘消息并进行相关方块操作*/
@@ -64,4 +65,15 @@ UINT GameProcess::BeginGame(LPVOID param) {
 }
 void GameProcess::OnBnClickBegin() {
 	//CWinThread* AfxBeginThread(GameProcess::BeginGame, (LPVOID)this);
+}
+void GameProcess::DrawMap(int x,int y,int type,int state) {
+	GameDraw->MainRendererClear();
+	GameDraw->MainAddBrick(x + bricks[type][state].p[0].x, x + bricks[type][state].p[0].y);
+	GameDraw->MainAddBrick(x+bricks[type][state].p[1].x,x+bricks[type][state].p[1].y);
+	GameDraw->MainAddBrick(x + bricks[type][state].p[2].x, x + bricks[type][state].p[2].y);
+	GameDraw->MainAddBrick(x + bricks[type][state].p[3].x, x + bricks[type][state].p[3].y);
+	for (int i = 0;i < HeightBySquare;i++) {
+		
+	}
+	GameDraw->MainRendererPresent();
 }
