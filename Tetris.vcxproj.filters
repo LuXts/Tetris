@@ -51,6 +51,9 @@
     <ClInclude Include="GameManager.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="GameProcess.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
     <ClInclude Include="CGlobe.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -78,6 +81,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="GameManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GameProcess.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="CGlobe.cpp">
