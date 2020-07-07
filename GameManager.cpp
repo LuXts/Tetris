@@ -12,6 +12,10 @@ GameManager::GameManager()
 			bcgSquare[i][j].x = i;
 			bcgSquare[i][j].y = j;
 		}
+		for (int j = -4, k = 20; j < 0; j++,k++) {
+			bcgSquare[i][k].x = i;
+			bcgSquare[i][k].y = j;
+		}
 	}
 
 	//下一个方块
@@ -58,7 +62,7 @@ void GameManager::NewRound()
 	brickState = 0;						//方块的旋转形态
 	InitNextBrick();
 	//初始化方块出现在地图上的中心点
-	centre.set(WidthBySquare / 2, 0 );
+	centre.set(WidthBySquare / 2, -3 );
 }
 
 //将方块写入地图
