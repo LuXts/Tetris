@@ -34,7 +34,7 @@ GameManager::GameManager()
 //初始化下一个方块
 void GameManager::InitNextBrick()
 {
-	srand(time(0));
+	srand( time(0));
 	brickNext = rand() % 7;
 }
 
@@ -59,9 +59,10 @@ void GameManager::NewGame()
 //新一轮方块掉落的初始化
 void GameManager::NewRound()
 {
-	brickType = brickNext;				//方块的种类
+			
 	brickState = 0;						//方块的旋转形态
 	InitNextBrick();
+	brickType = brickNext;//方块的种类
 	//初始化方块出现在地图上的中心点
 	centre.set(WidthBySquare / 2, -2 );
 }

@@ -8,6 +8,7 @@
 
 #include "Log.h"
 #include"GameProcess.h"
+#include"GameManager.h"
 // CGameDlg 对话框
 
 IMPLEMENT_DYNAMIC(CGameDlg, CDialogEx)
@@ -98,7 +99,16 @@ void CGameDlg::OnBnClickedButton1()
 
 	// TODO: 在此添加控件通知处理程序代码
 	GameProcess A(_Game);
-	//A.DrawMap(1, 1, 1, 1);
+	A.TetrisManger.NewGame();
+	A.TetrisManger.NewRound();
+	A.InitBrick();
+	for (int i = 0;i <5;i++) {
+		A.TetrisManger.MoveDown();
+	}
+	A.TetrisManger.FixBricks();
+	A.TetrisManger.NewRound();
+	A.InitBrick();
+	A.DrawMap(A.TetrisManger.centre.x, (A.TetrisManger.centre.y + 3), A.TetrisManger.brickType, A.TetrisManger.brickState, A.TetrisManger.bcgSquare);
 
 }
 

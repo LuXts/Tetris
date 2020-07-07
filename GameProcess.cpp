@@ -71,14 +71,14 @@ void GameProcess::OnBnClickBegin() {
 }
 void GameProcess::DrawMap(int x,int y,int type,int state,SingleSquare bcgSquare[WidthBySquare][HeightBySquare + 4]) {
 	GameDraw->MainRendererClear();
-	GameDraw->MainAddBrick(x + bricks[type][state].p[0].x, x + bricks[type][state].p[0].y);
-	GameDraw->MainAddBrick(x+bricks[type][state].p[1].x,x+bricks[type][state].p[1].y);
-	GameDraw->MainAddBrick(x + bricks[type][state].p[2].x, x + bricks[type][state].p[2].y);
-	GameDraw->MainAddBrick(x + bricks[type][state].p[3].x, x + bricks[type][state].p[3].y);
-	for (int i = 0;i < HeightBySquare;i++) {
-		for (int j = 4;j < WidthBySquare;i++) {
+	GameDraw->MainAddBrick(x + bricks[type][state].p[0].x, y + bricks[type][state].p[0].y);
+	GameDraw->MainAddBrick(x+bricks[type][state].p[1].x,y+bricks[type][state].p[1].y);
+	GameDraw->MainAddBrick(x + bricks[type][state].p[2].x, y + bricks[type][state].p[2].y);
+	GameDraw->MainAddBrick(x + bricks[type][state].p[3].x, y + bricks[type][state].p[3].y);
+	for (int i = 0;i < WidthBySquare;i++) {
+		for (int j = 0;j < HeightBySquare;j++) {
 			if (bcgSquare[i][j].state==1) {
-				GameDraw->MainAddBrick(i,j-4);
+				GameDraw->MainAddBrick(i,j);
 			}
 		}
 	}
@@ -98,24 +98,49 @@ BOOL GameProcess::Around() {
 		if (!TetrisManger.MoveDown()) {
 			TetrisManger.FixBricks();
 			score = score + (TetrisManger.RowCheck()* TetrisManger.RowCheck()) * Singlescore;
+			if (TetrisManger.TopCheck(TetrisManger.centre, bricks[TetrisManger.brickType][TetrisManger.brickState])) {
+				x = 3;
+				n = 0;
+				DrawMap(-5, -5, 1, 1, TetrisManger.bcgSquare);
+				return TRUE;
+			}//检测是否到顶端
+			x = 2;
 			n = 0;
 			DrawMap(-5,-5,1,1,TetrisManger.bcgSquare);
 			return TRUE;
-		}
+		}//检测是否到底端
 	}
 	n=n+1;
 	if (n==30) {
 		if (!TetrisManger.MoveDown()) {
 			TetrisManger.FixBricks();
 			score = score + (TetrisManger.RowCheck() * TetrisManger.RowCheck()) * Singlescore;
+			if (TetrisManger.TopCheck(TetrisManger.centre, bricks[TetrisManger.brickType][TetrisManger.brickState])) {
+				x = 3;
+				n = 0;
+				DrawMap(-5, -5, 1, 1, TetrisManger.bcgSquare);
+				return TRUE;
+			}//检测是否到顶端
+			x = 2;
 			n = 0;
 			DrawMap(-5, -5, 1, 1, TetrisManger.bcgSquare);
 			return TRUE;
-		}
+		}//检测是否到底端
 	}
+	x = 1;
 	DrawMap(TetrisManger.centre.x,TetrisManger.centre.y,TetrisManger.brickType,TetrisManger.brickState, TetrisManger.bcgSquare);
 	return TRUE;
 }
-void GameProcess::BeginGame() {
+BOOL GameProcess::InitBrick() {
+	while (1) {
+		for (int i = 0;i < 4;i++) {
+			if (bricks[TetrisManger.brickState][TetrisManger.brickType].p[i].y == 0) {
+				return TRUE;
+			}
+		}
+		TetrisManger.MoveDown();
+	}
+}//将方块调整到最上面一层
 
-}
+
+
