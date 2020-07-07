@@ -18,7 +18,8 @@ enum GameState {
 
 class GameManager {
 public:
-	SingleSquare bcgSquare[WidthBySquare][HeightBySquare];		//背景方块
+	SingleSquare bcgSquare[WidthBySquare][HeightBySquare+4];		//背景方块，其中的[][20],[][21],[][22],[][23]分别
+																	//表示从上往下数被隐去的第-4，-3，-2，-1行
 	SingleSquare nextSquare[4][4];		//下一个方块
 
 	GameState gameState;		//游戏状态
@@ -45,6 +46,8 @@ public:
 	BOOL BelowCheck(point p, Bricks d);		//下方碰撞检测
 	BOOL TopCheck(point p, Bricks d);		//上方碰撞检测
 	BOOL RotateCheck(point p, Bricks d);	//旋转碰撞检测
+
+	BOOL ScoreCheck(int s);		//判断分数是否累计到需要加速
 
 	void FixBricks();		//确定当前方块位置，写入地图
 
