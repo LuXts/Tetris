@@ -51,6 +51,7 @@ void GameManager::NewGame()
 	}
 	InitNextBrick();
 	score = 0;
+	interTime = 500;
 	gameState = READY;
 }
 
@@ -258,3 +259,12 @@ int GameManager::RowCheck()
 	
 	return a[0] - 1;			//返回删除了的行数
 }
+
+BOOL GameManager::ScoreCheck(int s) {
+	if (s % 1000 == 0) {
+		return TRUE;
+	}
+	return FALSE;
+}
+
+

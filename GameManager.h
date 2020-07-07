@@ -47,6 +47,8 @@ public:
 	BOOL TopCheck(point p, Bricks d);		//上方碰撞检测
 	BOOL RotateCheck(point p, Bricks d);	//旋转碰撞检测
 
+	BOOL ScoreCheck(int s);		//判断分数是否累计到需要加速
+
 	void FixBricks();		//确定当前方块位置，写入地图
 
 	void NewRound();		//准备新一轮方块掉落初始化
