@@ -28,14 +28,12 @@ public:
 	virtual BOOL DestroyWindow();
 	virtual BOOL OnInitDialog();
 	afx_msg void OnBnClickedButton1();
-	//	virtual BOOL Create(LPCTSTR lpszTemplateName, CWnd* pParentWnd = NULL);
-//	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
+
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 	// 游戏主要显示区域
 	CStatic GameArea;
 	// 下一个方块显示区域
 	CStatic NextArea;
 	afx_msg BOOL OnHelpInfo(HELPINFO* pHelpInfo);
-	//	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
-	//	afx_msg void OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags);
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
 };

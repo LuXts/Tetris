@@ -67,23 +67,10 @@ BOOL CTetrisDlg::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// 设置大图标
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
-	lena::Log::init(lena::LOG_LEVEL_DEBUG, lena::LOG_TARGET_FILE);
-
 	// TODO: 在此添加额外的初始化代码
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
-
-//void CTetrisDlg::OnSysCommand(UINT nID, LPARAM lParam)
-//{
-//	if ((nID & 0xFFF0) == IDM_ABOUTBOX)
-//	{
-//	}
-//	else
-//	{
-//		CDialogEx::OnSysCommand(nID, lParam);
-//	}
-//}
 
 // 如果向对话框添加最小化按钮，则需要下面的代码
 //  来绘制该图标。  对于使用文档/视图模型的 MFC 应用程序，

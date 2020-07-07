@@ -3,8 +3,8 @@
 
 CGlobe Globe;
 
-bool CGlobe::KEY_UP = false;
-bool CGlobe::KEY_DOWN = false;
-bool CGlobe::KEY_LEFT = false;
-bool CGlobe::KEY_RIGHT = false;
-bool CGlobe::KEY_PAUSE = false;
+BOOL CGlobe::KEY_UP = FALSE;
+BOOL CGlobe::KEY_DOWN = FALSE;
+BOOL CGlobe::KEY_LEFT = FALSE;
+BOOL CGlobe::KEY_RIGHT = FALSE;
+BOOL CGlobe::KEY_PAUSE = FALSE;
