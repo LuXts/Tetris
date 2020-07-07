@@ -9,6 +9,7 @@
 
 #include "CGameDlg.h"
 #include "Log.h"
+#include "GameSDL.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -46,8 +47,6 @@ BOOL CTetrisDlg::OnInitDialog()
 	// 将“关于...”菜单项添加到系统菜单中。
 
 	// IDM_ABOUTBOX 必须在系统命令范围内。
-	ASSERT((IDM_ABOUTBOX & 0xFFF0) == IDM_ABOUTBOX);
-	ASSERT(IDM_ABOUTBOX < 0xF000);
 
 	CMenu* pSysMenu = GetSystemMenu(FALSE);
 	if (pSysMenu != nullptr)
@@ -69,6 +68,7 @@ BOOL CTetrisDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
 	lena::Log::init(lena::LOG_LEVEL_DEBUG, lena::LOG_TARGET_FILE);
+	GameSDL::InitGame();
 
 	// TODO: 在此添加额外的初始化代码
 
