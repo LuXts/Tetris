@@ -53,6 +53,12 @@ END_MESSAGE_MAP()
 
 BOOL CGameDlg::DestroyWindow()
 {
+	Globe.KEY_UP = FALSE;
+	Globe.KEY_DOWN = FALSE;
+	Globe.KEY_LEFT = FALSE;
+	Globe.KEY_RIGHT = FALSE;
+	Globe.KEY_PAUSE = FALSE;
+
 	KillTimer(17);
 	// TODO: 在此添加专用代码和/或调用基类
 	delete _Game;
