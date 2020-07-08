@@ -110,7 +110,7 @@ void GameSDL::MainAddBrick(int x, int y) {
 
 	SDL_Rect tex_rect;
 	tex_rect.x = 0;
-	tex_rect.y = 0;
+	tex_rect.y = 256;
 	tex_rect.w = 256;
 	tex_rect.h = 256;
 

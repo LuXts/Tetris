@@ -8,11 +8,11 @@ class CGlobe
 private:
 
 public:
-	static bool KEY_UP;
-	static bool KEY_DOWN;
-	static bool KEY_LEFT;
-	static bool KEY_RIGHT;
-	static bool KEY_PAUSE;
+	static BOOL KEY_UP;
+	static BOOL KEY_DOWN;
+	static BOOL KEY_LEFT;
+	static BOOL KEY_RIGHT;
+	static BOOL KEY_PAUSE;
 	CGlobe() {
 		GameSDL::InitGame();
 	}
@@ -22,12 +22,12 @@ public:
 		lena::Log::uninit();
 	}
 
-	static void SetKeyAllFalse() {
-		KEY_UP = false;
-		KEY_DOWN = false;
-		KEY_LEFT = false;
-		KEY_RIGHT = false;
-		KEY_PAUSE = false;
+	static void SetKeyAllFALSE() {
+		KEY_UP = FALSE;
+		KEY_DOWN = FALSE;
+		KEY_LEFT = FALSE;
+		KEY_RIGHT = FALSE;
+		KEY_PAUSE = FALSE;
 	}
 };
 
