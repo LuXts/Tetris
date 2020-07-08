@@ -10,6 +10,8 @@
 #include "CGameDlg.h"
 #include "Log.h"
 #include "GameSDL.h"
+#include "CGlobe.h"
+#include "CRankList.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -28,6 +30,9 @@ CTetrisDlg::CTetrisDlg(CWnd* pParent /*=nullptr*/)
 void CTetrisDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_START_BUTTON, _Start_Button);
+	DDX_Control(pDX, IDC_RANK_BUTTON, _Rank_Button);
+	DDX_Control(pDX, IDC_QUIT_BUTTON, _Quit_Button);
 }
 
 BEGIN_MESSAGE_MAP(CTetrisDlg, CDialogEx)
@@ -35,7 +40,10 @@ BEGIN_MESSAGE_MAP(CTetrisDlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 	ON_WM_HELPINFO()
-	ON_BN_CLICKED(IDC_START_BUTTON, &CTetrisDlg::OnBnClickedStartButton)
+	ON_STN_CLICKED(IDC_START_BUTTON, &CTetrisDlg::OnStnClickedStartButton)
+	ON_STN_CLICKED(IDC_RANK_BUTTON, &CTetrisDlg::OnStnClickedRankButton)
+	ON_STN_CLICKED(IDC_QUIT_BUTTON, &CTetrisDlg::OnStnClickedExitButton)
+	ON_WM_CTLCOLOR()
 END_MESSAGE_MAP()
 
 // CTetrisDlg 消息处理程序
@@ -67,6 +75,8 @@ BOOL CTetrisDlg::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// 设置大图标
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
+	Globe.dlg = this;
+
 	// TODO: 在此添加额外的初始化代码
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
@@ -97,7 +107,10 @@ void CTetrisDlg::OnPaint()
 	}
 	else
 	{
-		CDialogEx::OnPaint();
+		CRect   rect;
+		CPaintDC   dc(this);
+		GetClientRect(rect);
+		dc.FillSolidRect(rect, RGB(40, 44, 52));
 	}
 }
 
@@ -115,10 +128,48 @@ BOOL CTetrisDlg::OnHelpInfo(HELPINFO* pHelpInfo)
 	return true;
 }
 
-void CTetrisDlg::OnBnClickedStartButton()
+//void CTetrisDlg::OnBnClickedStartButton()
+//{
+//	CGameDlg dlg;
+//	this->ShowWindow(SW_HIDE);
+//	dlg.DoModal();
+//	// TODO: 在此添加控件通知处理程序代码
+//}
+
+//void CTetrisDlg::OnBnClickedQuitButton()
+//{
+//	this->OnOK();
+//	// TODO: 在此添加控件通知处理程序代码
+//}
+
+//void CTetrisDlg::OnBnClickedRankButton()
+//{
+//	CRankList dlg;
+//	dlg.DoModal();
+//	// TODO: 在此添加控件通知处理程序代码
+//}
+
+void CTetrisDlg::OnStnClickedStartButton()
 {
 	CGameDlg dlg;
-	this->OnOK();
+	this->ShowWindow(SW_HIDE);
 	dlg.DoModal();
-	// TODO: 在此添加控件通知处理程序代码
+}
+
+void CTetrisDlg::OnStnClickedRankButton()
+{
+	CRankList dlg;
+	dlg.DoModal();
+}
+
+void CTetrisDlg::OnStnClickedExitButton()
+{
+	this->OnOK();
+}
+
+HBRUSH CTetrisDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+{
+	HBRUSH hbr = CDialogEx::OnCtlColor(pDC, pWnd, nCtlColor);
+
+	return hbr;
 }

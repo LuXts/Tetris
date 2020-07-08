@@ -8,6 +8,8 @@
 class CGameDlg : public CDialogEx
 {
 private:
+	bool _Pause;
+	bool _Exit;
 	GameSDL* _Game;
 	GameProcess* _GProcess;
 
@@ -29,7 +31,7 @@ protected:
 public:
 	virtual BOOL DestroyWindow();
 	virtual BOOL OnInitDialog();
-//	afx_msg void OnBnClickedButton1();
+	//	afx_msg void OnBnClickedButton1();
 
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 	// 游戏主要显示区域
@@ -43,4 +45,6 @@ private:
 	CString _Diff;
 public:
 	CString _Score;
+	afx_msg void OnPaint();
+	//	afx_msg void OnKillFocus(CWnd* pNewWnd);
 };

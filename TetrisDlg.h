@@ -1,14 +1,14 @@
-﻿
-// TetrisDlg.h: 头文件
+﻿// TetrisDlg.h: 头文件
 //
 
 #pragma once
 
+#include "CStaticEX.h"
 
 // CTetrisDlg 对话框
 class CTetrisDlg : public CDialogEx
 {
-// 构造
+	// 构造
 public:
 	CTetrisDlg(CWnd* pParent = nullptr);	// 标准构造函数
 
@@ -17,9 +17,8 @@ public:
 	enum { IDD = IDD_TETRIS_DIALOG };
 #endif
 
-	protected:
+protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV 支持
-
 
 // 实现
 protected:
@@ -27,11 +26,21 @@ protected:
 
 	// 生成的消息映射函数
 	virtual BOOL OnInitDialog();
-//	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
+	//	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg BOOL OnHelpInfo(HELPINFO* pHelpInfo);
-	afx_msg void OnBnClickedStartButton();
+	//	afx_msg void OnBnClickedStartButton();
+	//	afx_msg void OnBnClickedQuitButton();
+	//	afx_msg void OnBnClickedRankButton();
+	afx_msg void OnStnClickedStartButton();
+	afx_msg void OnStnClickedRankButton();
+	afx_msg void OnStnClickedExitButton();
+	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
+private:
+	CStaticEX _Start_Button;
+	CStaticEX _Rank_Button;
+	CStaticEX _Quit_Button;
 };

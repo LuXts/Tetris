@@ -11,6 +11,9 @@
 #include"GameManager.h"
 #include "CGlobe.h"
 
+#include "CPauseDlg.h"
+#include "CEndDlg.h"
+
 // CGameDlg 对话框
 
 IMPLEMENT_DYNAMIC(CGameDlg, CDialogEx)
@@ -42,12 +45,20 @@ BEGIN_MESSAGE_MAP(CGameDlg, CDialogEx)
 	//	ON_WM_KEYDOWN()
 	//	ON_WM_KEYUP()
 	ON_WM_TIMER()
+	ON_WM_PAINT()
+	//	ON_WM_KILLFOCUS()
 END_MESSAGE_MAP()
 
 // CGameDlg 消息处理程序
 
 BOOL CGameDlg::DestroyWindow()
 {
+	Globe.KEY_UP = FALSE;
+	Globe.KEY_DOWN = FALSE;
+	Globe.KEY_LEFT = FALSE;
+	Globe.KEY_RIGHT = FALSE;
+	Globe.KEY_PAUSE = FALSE;
+
 	KillTimer(17);
 	// TODO: 在此添加专用代码和/或调用基类
 	delete _Game;
@@ -79,6 +90,8 @@ BOOL CGameDlg::OnInitDialog()
 	_GProcess->DrawNext();
 	SetTimer(17, 10, NULL);
 
+	_Pause = false;
+	_Exit = false;
 	// TODO:  在此添加额外的初始化
 
 	return TRUE;  // return TRUE unless you set the focus to a control
@@ -88,9 +101,24 @@ BOOL CGameDlg::OnInitDialog()
 HBRUSH CGameDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
 	HBRUSH hbr = CDialogEx::OnCtlColor(pDC, pWnd, nCtlColor);
-
-	_Game->MainRendererPresent();
-	_Game->NextRendererPresent();
+	if (pWnd->GetDlgCtrlID() == IDC_GAME_WINDOW) {
+		_Game->MainRendererPresent();
+	}
+	else if (pWnd->GetDlgCtrlID() == IDC_NEXT_BRICK_PIC) {
+		_Game->NextRendererPresent();
+	}
+	switch (nCtlColor)
+	{
+	case CTLCOLOR_STATIC: //对所有静态文本框的设置
+	{
+		pDC->SetBkMode(TRANSPARENT);
+		//设置背景为透明
+		pDC->SetTextColor(RGB(200, 200, 200)); //设置字体颜色
+		HBRUSH B = CreateSolidBrush(RGB(46, 50, 58));
+		//创建画刷
+		return (HBRUSH)B; //返回画刷句柄
+	}
+	}
 	// TODO:  在此更改 DC 的任何特性
 
 	// TODO:  如果默认的不是所需画笔，则返回另一个画笔
@@ -130,29 +158,20 @@ BOOL CGameDlg::PreTranslateMessage(MSG* pMsg)
 			return TRUE;
 		}
 		if (pMsg->wParam == VK_ESCAPE) {
-			MessageBox(_T("222"));
+			KillTimer(17);
+			_Pause = true;
+			CPauseDlg Dlg(_GProcess->score, &_Exit);
+			Dlg.DoModal();
+			if (_Exit) {
+				this->OnOK();
+			}
+			_Pause = false;
+			SetTimer(17, 10, NULL);
 			return TRUE;
 		}
 	}
 
 	if (pMsg->message == WM_KEYUP) {
-		/*
-		if (pMsg->wParam == VK_UP)
-		{
-			Globe.KEY_UP = FALSE;
-			return TRUE;
-		}
-		if (pMsg->wParam == VK_LEFT)
-		{
-			Globe.KEY_LEFT = FALSE;
-			return TRUE;
-		}
-		if (pMsg->wParam == VK_RIGHT)
-		{
-			Globe.KEY_RIGHT = FALSE;
-			return TRUE;
-		}
-		*/
 		if (pMsg->wParam == VK_DOWN)
 		{
 			Globe.KEY_DOWN = FALSE;
@@ -173,8 +192,19 @@ void CGameDlg::OnTimer(UINT_PTR nIDEvent)
 		UpdateData(FALSE);
 		if (_GProcess->Around()) {
 			KillTimer(17);
+			CEndDlg dlg(_GProcess->score);
+			dlg.DoModal();
+			this->OnOK();
 		}
 		return;
 	}
 	CDialogEx::OnTimer(nIDEvent);
+}
+
+void CGameDlg::OnPaint()
+{
+	CRect   rect;
+	CPaintDC   dc(this);
+	GetClientRect(rect);
+	dc.FillSolidRect(rect, RGB(46, 50, 58));
 }

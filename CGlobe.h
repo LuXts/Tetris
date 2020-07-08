@@ -2,6 +2,7 @@
 
 #include "GameSDL.h"
 #include "Log.h"
+#include "TetrisDlg.h"
 
 class CGlobe
 {
@@ -13,6 +14,9 @@ public:
 	static BOOL KEY_LEFT;
 	static BOOL KEY_RIGHT;
 	static BOOL KEY_PAUSE;
+
+	static CTetrisDlg* dlg;
+
 	CGlobe() {
 		GameSDL::InitGame();
 	}
@@ -20,14 +24,6 @@ public:
 	~CGlobe() {
 		GameSDL::QuitGame();
 		lena::Log::uninit();
-	}
-
-	static void SetKeyAllFALSE() {
-		KEY_UP = FALSE;
-		KEY_DOWN = FALSE;
-		KEY_LEFT = FALSE;
-		KEY_RIGHT = FALSE;
-		KEY_PAUSE = FALSE;
 	}
 };
 
