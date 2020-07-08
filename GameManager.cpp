@@ -12,6 +12,10 @@ GameManager::GameManager()
 			bcgSquare[i][j].x = i;
 			bcgSquare[i][j].y = j;
 		}
+		for (int j = -4, k = 20; j < 0; j++,k++) {
+			bcgSquare[i][k].x = i;
+			bcgSquare[i][k].y = j;
+		}
 	}
 
 	//下一个方块
@@ -30,7 +34,7 @@ GameManager::GameManager()
 //初始化下一个方块
 void GameManager::InitNextBrick()
 {
-	srand(time(0));
+	srand( time(0));
 	brickNext = rand() % 7;
 }
 
@@ -47,6 +51,7 @@ void GameManager::NewGame()
 	}
 	InitNextBrick();
 	score = 0;
+	interTime = 500;
 	gameState = READY;
 }
 
@@ -54,11 +59,12 @@ void GameManager::NewGame()
 //新一轮方块掉落的初始化
 void GameManager::NewRound()
 {
-	brickType = brickNext;				//方块的种类
+			
 	brickState = 0;						//方块的旋转形态
 	InitNextBrick();
+	brickType = brickNext;//方块的种类
 	//初始化方块出现在地图上的中心点
-	centre.set(WidthBySquare / 2, 0 );
+	centre.set(WidthBySquare / 2, -2 );
 }
 
 //将方块写入地图
@@ -254,3 +260,12 @@ int GameManager::RowCheck()
 	
 	return a[0] - 1;			//返回删除了的行数
 }
+
+BOOL GameManager::ScoreCheck(int s) {
+	if (s % 1000 == 0) {
+		return TRUE;
+	}
+	return FALSE;
+}
+
+

@@ -7,6 +7,8 @@
 #include "afxdialogex.h"
 
 #include "Log.h"
+#include"GameProcess.h"
+#include"GameManager.h"
 #include "CGlobe.h"
 
 // CGameDlg 对话框
@@ -44,6 +46,7 @@ BOOL CGameDlg::DestroyWindow()
 {
 	// TODO: 在此添加专用代码和/或调用基类
 	delete _Game;
+	delete _GProcess;
 	LOG(lena::LOG_LEVEL_DEBUG, "GameDlg Destroy!");
 	return CDialogEx::DestroyWindow();
 }
@@ -65,6 +68,8 @@ BOOL CGameDlg::OnInitDialog()
 	SetWindowPos(NULL, 0, 0, 465, rect.Height() - rectClient.Height() + 600, SWP_NOMOVE);
 
 	_Game = new GameSDL(GameArea.GetSafeHwnd(), NextArea.GetSafeHwnd());
+	_GProcess = new GameProcess(_Game);
+
 	// TODO:  在此添加额外的初始化
 
 	return TRUE;  // return TRUE unless you set the focus to a control
@@ -73,10 +78,8 @@ BOOL CGameDlg::OnInitDialog()
 
 void CGameDlg::OnBnClickedButton1()
 {
-	static int x = 0, y = 0;
-	/*
+	/*static int x = 0, y = 0;
 
-	*/
 	_Game->MainRendererClear();
 
 	_Game->MainAddBrick(x, y);
@@ -93,8 +96,20 @@ void CGameDlg::OnBnClickedButton1()
 	x++;
 	y++;
 	x = x % 10;
-	y = y % 10;
+	y = y % 10;*/
+
 	// TODO: 在此添加控件通知处理程序代码
+	GameProcess A(_Game);
+	A.TetrisManger.NewGame();
+	A.TetrisManger.NewRound();
+	A.InitBrick();
+	for (int i = 0;i <5;i++) {
+		A.TetrisManger.MoveDown();
+	}
+	A.TetrisManger.FixBricks();
+	A.TetrisManger.NewRound();
+	A.InitBrick();
+	A.DrawMap(A.TetrisManger.centre.x, (A.TetrisManger.centre.y + 3), A.TetrisManger.brickType, A.TetrisManger.brickState, A.TetrisManger.bcgSquare);
 }
 
 HBRUSH CGameDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)

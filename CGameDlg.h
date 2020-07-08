@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "GameSDL.h"
+#include "GameProcess.h"
 
 // CGameDlg 对话框
 
@@ -8,6 +9,7 @@ class CGameDlg : public CDialogEx
 {
 private:
 	GameSDL* _Game;
+	GameProcess* _GProcess;
 
 	DECLARE_DYNAMIC(CGameDlg)
 
