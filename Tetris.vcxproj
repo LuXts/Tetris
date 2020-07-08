@@ -195,8 +195,13 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CEndDlg.h" />
     <ClInclude Include="CGameDlg.h" />
     <ClInclude Include="Bricks.h" />
+    <ClInclude Include="CJson.h" />
+    <ClInclude Include="CPauseDlg.h" />
+    <ClInclude Include="CRankList.h" />
+    <ClInclude Include="CStaticEX.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GameProcess.h" />
     <ClInclude Include="GameSDL.h" />
@@ -211,7 +216,12 @@
     <ClInclude Include="TetrisDlg.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CEndDlg.cpp" />
     <ClCompile Include="CGameDlg.cpp" />
+    <ClCompile Include="CJson.cpp" />
+    <ClCompile Include="CPauseDlg.cpp" />
+    <ClCompile Include="CRankList.cpp" />
+    <ClCompile Include="CStaticEX.cpp" />
     <ClCompile Include="GameProcess.cpp" />
     <ClCompile Include="GameSDL.cpp" />
     <ClCompile Include="CGlobe.cpp" />

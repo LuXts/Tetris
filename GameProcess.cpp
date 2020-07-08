@@ -69,6 +69,7 @@ BOOL GameProcess::Around() {
 	static int time_up = 0;
 	static int time_left = 0;
 	static int time_right = 0;
+	static int time_max = 5;
 	static int time_down = 0;
 	static int time_down_max = 50;
 	static int time_down_temp = 50;
@@ -76,17 +77,17 @@ BOOL GameProcess::Around() {
 	if (Globe.KEY_UP == TRUE && time_up-- == 0) {
 		Globe.KEY_UP = FALSE;
 		TetrisManger.RotateTop();
-		time_up = 3;
+		time_up = time_max;
 	}
 	if (Globe.KEY_LEFT == TRUE && time_left-- == 0) {
 		Globe.KEY_LEFT = FALSE;
 		TetrisManger.MoveLeft();
-		time_left = 3;
+		time_left = time_max;
 	}
 	if (Globe.KEY_RIGHT == TRUE && time_right-- == 0) {
 		Globe.KEY_RIGHT = FALSE;
 		TetrisManger.MoveRight();
-		time_right = 3;
+		time_right = time_max;
 	}
 	if (Globe.KEY_DOWN == TRUE) {
 		if (time_down_max != 1) {
@@ -126,15 +127,18 @@ BOOL GameProcess::Around() {
 			break;
 		case 4:
 			time_down_temp = 30;
+			time_max = 3;
 			break;
 		case 5:
-			time_down_temp = 20;
+			time_down_temp = 25;
 			break;
 		case 6:
-			time_down_temp = 10;
+			time_down_temp = 20;
+			time_max = 2;
 			break;
 		case 7:
-			time_down_temp = 5;
+			time_down_temp = 15;
+			time_max = 1;
 			break;
 		}
 		time_down_max = time_down_temp;
@@ -158,7 +162,7 @@ BOOL GameProcess::Around() {
 			//return TRUE;
 			TetrisManger.FixBricks();
 			int temp = TetrisManger.RowCheck();
-			score = score + (temp * temp) * Singlescore;
+			score = score + (temp * temp) * Singlescore * (1 + (double)score / 10000);
 			LOG(lena::LOG_LEVEL_DEBUG, "Score: %d", score);
 			TetrisManger.NewRound();
 			DrawNext();

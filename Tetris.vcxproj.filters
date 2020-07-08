@@ -57,6 +57,21 @@
     <ClInclude Include="CGlobe.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="CPauseDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CRankList.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CJson.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CEndDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CStaticEX.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Tetris.cpp">
@@ -87,6 +102,21 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="CGlobe.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CPauseDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CRankList.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CJson.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CEndDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CStaticEX.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
