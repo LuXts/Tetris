@@ -67,7 +67,7 @@ BOOL CTetrisApp::InitInstance()
 	// 例如修改为公司或组织名
 	SetRegistryKey(_T("MFC practice test. "));
 
-	lena::Log::init(lena::LOG_LEVEL_DEBUG, lena::LOG_TARGET_ALL);
+	lena::Log::init(lena::LOG_LEVEL_WANING, lena::LOG_TARGET_ALL);
 
 	CTetrisDlg dlg;
 	m_pMainWnd = &dlg;
@@ -101,7 +101,7 @@ BOOL CTetrisApp::InitInstance()
 	// 由于对话框已关闭，所以将返回 FALSE 以便退出应用程序，
 	//  而不是启动应用程序的消息泵。
 	return FALSE;
-	}
+}
 
 int CTetrisApp::ExitInstance()
 {

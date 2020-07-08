@@ -62,22 +62,24 @@ BOOL CRankList::OnInitDialog()
 			_ScoreList.emplace_back(_Score);
 			_NameList.emplace_back(_Name);
 		}
-		int total = _ScoreList.size();
-		int i = 0;
-		for (; i < total; i++) {
-			if (_ScoreList[i] < _Score) {
-				_ScoreList.insert(_ScoreList.begin() + i, _Score);
-				_NameList.insert(_NameList.begin() + i, _Name);
-				break;
+		else {
+			int total = _ScoreList.size();
+			int i = 0;
+			for (; i < total; i++) {
+				if (_ScoreList[i] < _Score) {
+					_ScoreList.insert(_ScoreList.begin() + i, _Score);
+					_NameList.insert(_NameList.begin() + i, _Name);
+					break;
+				}
 			}
-		}
-		if (i == total) {
-			_ScoreList.emplace_back(_Score);
-			_NameList.emplace_back(_Name);
-		}
-		while (_ScoreList.size() > 10) {
-			_ScoreList.pop_back();
-			_NameList.pop_back();
+			if (i == total) {
+				_ScoreList.emplace_back(_Score);
+				_NameList.emplace_back(_Name);
+			}
+			while (_ScoreList.size() > 10) {
+				_ScoreList.pop_back();
+				_NameList.pop_back();
+			}
 		}
 	}
 
