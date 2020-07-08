@@ -9,6 +9,8 @@
 #include "Log.h"
 #include"GameProcess.h"
 #include"GameManager.h"
+#include "CGlobe.h"
+
 // CGameDlg 对话框
 
 IMPLEMENT_DYNAMIC(CGameDlg, CDialogEx)
@@ -53,20 +55,21 @@ BOOL CGameDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
-
 	HICON m_hIcon = AfxGetApp()->LoadIconW(IDR_MAINFRAME);
 	SetIcon(m_hIcon, TRUE);			// 设置大图标
 	SetIcon(m_hIcon, FALSE);
 
 	GameArea.SetWindowPos(NULL, 0, 0, 300, 600, SWP_NOMOVE);
 	NextArea.SetWindowPos(NULL, 0, 0, 120, 120, SWP_NOMOVE);
-	CRect rect;
+	CRect rect, rectClient;
 	GetWindowRect(rect);
-	MoveWindow(rect.left, rect.top, rect.Width(), rect.Height() - 50);
+	GetClientRect(rectClient);
+	//LOG(lena::LOG_LEVEL_DEBUG, "Height: %d", GetSystemMetrics(SM_CYSIZE));
+	SetWindowPos(NULL, 0, 0, 465, rect.Height() - rectClient.Height() + 600, SWP_NOMOVE);
 
 	_Game = new GameSDL(GameArea.GetSafeHwnd(), NextArea.GetSafeHwnd());
 	_GProcess = new GameProcess(_Game);
-	
+
 	// TODO:  在此添加额外的初始化
 
 	return TRUE;  // return TRUE unless you set the focus to a control
@@ -76,9 +79,7 @@ BOOL CGameDlg::OnInitDialog()
 void CGameDlg::OnBnClickedButton1()
 {
 	/*static int x = 0, y = 0;
-	
 
-	
 	_Game->MainRendererClear();
 
 	_Game->MainAddBrick(x, y);
@@ -101,14 +102,17 @@ void CGameDlg::OnBnClickedButton1()
 	GameProcess A(_Game);
 	A.TetrisManger.NewGame();
 	A.TetrisManger.NewRound();
-	A.InitBrick();
-	for (int i = 0;i <5;i++) {
+	A.DrawNext();
+	for (int i = 0;i <13;i++) {
 		A.TetrisManger.MoveDown();
 	}
 	A.TetrisManger.FixBricks();
 	A.TetrisManger.NewRound();
+
 	A.InitBrick();
-	A.DrawMap(A.TetrisManger.centre.x, (A.TetrisManger.centre.y + 3), A.TetrisManger.brickType, A.TetrisManger.brickState, A.TetrisManger.bcgSquare);
+	A.DrawMap(A.TetrisManger.centre.x, (A.TetrisManger.centre.y + 4), A.TetrisManger.brickType, A.TetrisManger.brickState, A.TetrisManger.bcgSquare);
+
+	//A.InitBrick();
 
 }
 
@@ -131,17 +135,53 @@ BOOL CGameDlg::OnHelpInfo(HELPINFO* pHelpInfo)
 	return true;
 }
 
-//void CGameDlg::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
-//{
-//	// TODO: 在此添加消息处理程序代码和/或调用默认值
-//	LOG(lena::LOG_LEVEL_DEBUG, "KEY_DOWN %d %d %d ", nChar, nRepCnt, nFlags);
-//	CDialogEx::OnKeyDown(nChar, nRepCnt, nFlags);
-//}
-
-//void CGameDlg::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
-//{
-//	// TODO: 在此添加消息处理程序代码和/或调用默认值
-//
-//	LOG(lena::LOG_LEVEL_DEBUG, "KEY_UP %d %d %d ", nChar, nRepCnt, nFlags);
-//	CDialogEx::OnKeyUp(nChar, nRepCnt, nFlags);
-//}
+BOOL CGameDlg::PreTranslateMessage(MSG* pMsg)
+{
+	// TODO: 在此添加专用代码和/或调用基类
+	if (pMsg->message == WM_KEYDOWN)
+	{
+		if (pMsg->wParam == VK_UP)
+		{
+			Globe.KEY_UP = TRUE;
+			return TRUE;
+		}
+		if (pMsg->wParam == VK_DOWN)
+		{
+			Globe.KEY_DOWN = TRUE;
+			return TRUE;
+		}
+		if (pMsg->wParam == VK_LEFT)
+		{
+			Globe.KEY_LEFT = TRUE;
+			return TRUE;
+		}
+		if (pMsg->wParam == VK_RIGHT)
+		{
+			Globe.KEY_RIGHT = TRUE;
+			return TRUE;
+		}
+	}
+	if (pMsg->message == WM_KEYUP) {
+		if (pMsg->wParam == VK_UP)
+		{
+			Globe.KEY_UP = FALSE;
+			return TRUE;
+		}
+		if (pMsg->wParam == VK_DOWN)
+		{
+			Globe.KEY_DOWN = FALSE;
+			return TRUE;
+		}
+		if (pMsg->wParam == VK_LEFT)
+		{
+			Globe.KEY_LEFT = FALSE;
+			return TRUE;
+		}
+		if (pMsg->wParam == VK_RIGHT)
+		{
+			Globe.KEY_RIGHT = FALSE;
+			return TRUE;
+		}
+	}
+	return CDialogEx::PreTranslateMessage(pMsg);
+}

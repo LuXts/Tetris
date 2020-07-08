@@ -141,6 +141,14 @@ BOOL GameProcess::InitBrick() {
 		TetrisManger.MoveDown();
 	}
 }//将方块调整到最上面一层
-
+BOOL GameProcess:: DrawNext(int x, int y) {
+	GameDraw->NextRendererClear();
+	GameDraw->NextAddBrick(x + bricks[TetrisManger.brickType][TetrisManger.brickState].p[0].x, y + bricks[TetrisManger.brickType][TetrisManger.brickState].p[0].y);
+	GameDraw->NextAddBrick(x + bricks[TetrisManger.brickType][TetrisManger.brickState].p[1].x, y + bricks[TetrisManger.brickType][TetrisManger.brickState].p[1].y);
+	GameDraw->NextAddBrick(x + bricks[TetrisManger.brickType][TetrisManger.brickState].p[2].x, y + bricks[TetrisManger.brickType][TetrisManger.brickState].p[2].y);
+	GameDraw->NextAddBrick(x + bricks[TetrisManger.brickType][TetrisManger.brickState].p[3].x, y + bricks[TetrisManger.brickType][TetrisManger.brickState].p[3].y);
+	GameDraw->NextRendererPresent();
+	return TRUE;
+}
 
 

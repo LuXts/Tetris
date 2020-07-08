@@ -24,4 +24,5 @@ public:
 	//BOOL BeginGame();
 	BOOL Around();//一个方块的游戏流程
 	BOOL InitBrick();//将方块移动到最上端；
+	BOOL DrawNext(int x=1, int y=2);
 };
