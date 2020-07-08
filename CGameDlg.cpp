@@ -38,12 +38,14 @@ BEGIN_MESSAGE_MAP(CGameDlg, CDialogEx)
 	ON_WM_HELPINFO()
 	//	ON_WM_KEYDOWN()
 	//	ON_WM_KEYUP()
+	ON_WM_TIMER()
 END_MESSAGE_MAP()
 
 // CGameDlg 消息处理程序
 
 BOOL CGameDlg::DestroyWindow()
 {
+	KillTimer(17);
 	// TODO: 在此添加专用代码和/或调用基类
 	delete _Game;
 	delete _GProcess;
@@ -69,6 +71,10 @@ BOOL CGameDlg::OnInitDialog()
 
 	_Game = new GameSDL(GameArea.GetSafeHwnd(), NextArea.GetSafeHwnd());
 	_GProcess = new GameProcess(_Game);
+
+	_GProcess->TetrisManger.NewGame();
+
+	SetTimer(17, 10, NULL);
 
 	// TODO:  在此添加额外的初始化
 
@@ -99,17 +105,19 @@ void CGameDlg::OnBnClickedButton1()
 	y = y % 10;*/
 
 	// TODO: 在此添加控件通知处理程序代码
+	/*
 	GameProcess A(_Game);
 	A.TetrisManger.NewGame();
 	A.TetrisManger.NewRound();
 	A.InitBrick();
-	for (int i = 0;i <5;i++) {
+	for (int i = 0; i < 5; i++) {
 		A.TetrisManger.MoveDown();
 	}
 	A.TetrisManger.FixBricks();
 	A.TetrisManger.NewRound();
 	A.InitBrick();
 	A.DrawMap(A.TetrisManger.centre.x, (A.TetrisManger.centre.y + 3), A.TetrisManger.brickType, A.TetrisManger.brickState, A.TetrisManger.bcgSquare);
+	*/
 }
 
 HBRUSH CGameDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
@@ -157,15 +165,12 @@ BOOL CGameDlg::PreTranslateMessage(MSG* pMsg)
 			return TRUE;
 		}
 	}
+
 	if (pMsg->message == WM_KEYUP) {
+		/*
 		if (pMsg->wParam == VK_UP)
 		{
 			Globe.KEY_UP = FALSE;
-			return TRUE;
-		}
-		if (pMsg->wParam == VK_DOWN)
-		{
-			Globe.KEY_DOWN = FALSE;
 			return TRUE;
 		}
 		if (pMsg->wParam == VK_LEFT)
@@ -178,6 +183,22 @@ BOOL CGameDlg::PreTranslateMessage(MSG* pMsg)
 			Globe.KEY_RIGHT = FALSE;
 			return TRUE;
 		}
+		*/
+		if (pMsg->wParam == VK_DOWN)
+		{
+			Globe.KEY_DOWN = FALSE;
+			return TRUE;
+		}
 	}
+
 	return CDialogEx::PreTranslateMessage(pMsg);
+}
+
+void CGameDlg::OnTimer(UINT_PTR nIDEvent)
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+	if (nIDEvent == 17) {
+		_GProcess->Around();
+	}
+	CDialogEx::OnTimer(nIDEvent);
 }

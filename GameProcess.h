@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <WinSock2.h>
 #include"GameManager.h"
 #include "Bricks.h"
@@ -10,18 +10,14 @@ class GameProcess {
 public:
 	GameManager TetrisManger;
 	GameSDL* GameDraw;
-	int score=0;
-	int n;//ÓÃÓÚÅĞ¶ÏÊÇ·ñ×Ô¶¯ÏÂÂä£»
-	int x=1;//ÅĞ¶Ïµ±Ç°µÄÓÎÏ·×´Ì¬£¨1±íÊ¾¼ÌĞøÏÂÂä£¬2±íÊ¾µ½µ×£¬3±íÊ¾ÔÚ¶¥¶Ë£©
+	int score = 0;
+	//int n;//ç”¨äºåˆ¤æ–­æ˜¯å¦è‡ªåŠ¨ä¸‹è½ï¼›
+	//int x = 1;//åˆ¤æ–­å½“å‰çš„æ¸¸æˆçŠ¶æ€ï¼ˆ1è¡¨ç¤ºç»§ç»­ä¸‹è½ï¼Œ2è¡¨ç¤ºåˆ°åº•ï¼Œ3è¡¨ç¤ºåœ¨é¡¶ç«¯ï¼‰
 
-	GameProcess(GameSDL* A) {
-		GameDraw = A;
-	}
-	BOOL TranslateMessage(MSG* pMSG);
-	void OnBnClickBegin();
+	GameProcess(GameSDL* A);
 	UINT BeginGame(LPVOID param);
-	void DrawMap(int x, int y, int type, int state, SingleSquare bcgSquare[WidthBySquare][HeightBySquare + 4]);
+	void DrawMap(int x, int y, int type, int state, SingleSquare bcgSquare[WidthBySquare][HeightBySquare]);
 	//BOOL BeginGame();
-	BOOL Around();//Ò»¸ö·½¿éµÄÓÎÏ·Á÷³Ì
-	BOOL InitBrick();//½«·½¿éÒÆ¶¯µ½×îÉÏ¶Ë£»
+	BOOL Around();//ä¸€ä¸ªæ–¹å—çš„æ¸¸æˆæµç¨‹
+	BOOL InitBrick();//å°†æ–¹å—ç§»åŠ¨åˆ°æœ€ä¸Šç«¯ï¼›
 };

@@ -1,13 +1,13 @@
-#pragma once
+ï»¿#pragma once
 #include "SingleSquare.h"
 #include "Bricks.h"
 #include "iostream"
 using namespace std;
 
-#define HeightBySquare 20		//±³¾°³¤20¸ö·½¿é
-#define WidthBySquare  10		//±³¾°¿í10¸ö·½¿é
+#define HeightBySquare 20		//èƒŒæ™¯é•¿20ä¸ªæ–¹å—
+#define WidthBySquare  10		//èƒŒæ™¯å®½10ä¸ªæ–¹å—
 
-#define Time_Interval 500	//·½¿éÏÂÂä¼ä¸ôÊ±¼ä
+#define Time_Interval 500	//æ–¹å—ä¸‹è½é—´éš”æ—¶é—´
 
 enum GameState {
 	READY,
@@ -18,46 +18,44 @@ enum GameState {
 
 class GameManager {
 public:
-	SingleSquare bcgSquare[WidthBySquare][HeightBySquare+4];		//±³¾°·½¿é£¬ÆäÖĞµÄ[][20],[][21],[][22],[][23]·Ö±ğ
-																	//±íÊ¾´ÓÉÏÍùÏÂÊı±»ÒşÈ¥µÄµÚ-4£¬-3£¬-2£¬-1ĞĞ
-	SingleSquare nextSquare[4][4];		//ÏÂÒ»¸ö·½¿é
+	SingleSquare bcgSquare[WidthBySquare][HeightBySquare];		//èƒŒæ™¯æ–¹å—ï¼Œå…¶ä¸­çš„[][20],[][21],[][22],[][23]åˆ†åˆ«
+																	//è¡¨ç¤ºä»ä¸Šå¾€ä¸‹æ•°è¢«éšå»çš„ç¬¬-4ï¼Œ-3ï¼Œ-2ï¼Œ-1è¡Œ
+	SingleSquare nextSquare[4][4];		//ä¸‹ä¸€ä¸ªæ–¹å—
 
-	GameState gameState;		//ÓÎÏ·×´Ì¬
+	GameState gameState;		//æ¸¸æˆçŠ¶æ€
 
-	point centre;			//ÖĞĞÄµã
-	int brickType;			//·½¿éµÄÖÖÀà
-	int brickState;			//·½¿éµÄĞı×ª×´Ì¬
-	int brickNext;			//ÏÂÒ»¸ö·½¿é
+	point centre;			//ä¸­å¿ƒç‚¹
+	int brickType;			//æ–¹å—çš„ç§ç±»
+	int brickState;			//æ–¹å—çš„æ—‹è½¬çŠ¶æ€
+	int brickNext;			//ä¸‹ä¸€ä¸ªæ–¹å—
 
-
-	int score;				//·ÖÊı
-	int interTime;			//ÏÂÂä¼ä¸ôÊ±¼ä
+	int score;				//åˆ†æ•°
+	int interTime;			//ä¸‹è½é—´éš”æ—¶é—´
 
 	GameManager();
 
-	BOOL MoveDown();		//·½¿éÏÂÒÆ
-	BOOL RotateTop();		//·½¿éĞı×ª
-	BOOL MoveLeft();		//·½¿é×óÒÆ	
-	BOOL MoveRight();		//·½¿éÓÒÒÆ
+	BOOL MoveDown();		//æ–¹å—ä¸‹ç§»
+	BOOL RotateTop();		//æ–¹å—æ—‹è½¬
+	BOOL MoveLeft();		//æ–¹å—å·¦ç§»
+	BOOL MoveRight();		//æ–¹å—å³ç§»
 
+	BOOL LeftCheck(point p, Bricks d);		//å·¦è¾¹ç¢°æ’æ£€æµ‹
+	BOOL RightCheck(point p, Bricks d);		//å³è¾¹ç¢°æ’æ£€æµ‹
+	BOOL BelowCheck(point p, Bricks d);		//ä¸‹æ–¹ç¢°æ’æ£€æµ‹
+	BOOL TopCheck(point p, Bricks d);		//ä¸Šæ–¹ç¢°æ’æ£€æµ‹
+	BOOL RotateCheck(point p, Bricks d);	//æ—‹è½¬ç¢°æ’æ£€æµ‹
 
-	BOOL LeftCheck(point p, Bricks d);		//×ó±ßÅö×²¼ì²â
-	BOOL RightCheck(point p, Bricks d);		//ÓÒ±ßÅö×²¼ì²â
-	BOOL BelowCheck(point p, Bricks d);		//ÏÂ·½Åö×²¼ì²â
-	BOOL TopCheck(point p, Bricks d);		//ÉÏ·½Åö×²¼ì²â
-	BOOL RotateCheck(point p, Bricks d);	//Ğı×ªÅö×²¼ì²â
+	BOOL ScoreCheck(int s);		//åˆ¤æ–­åˆ†æ•°æ˜¯å¦ç´¯è®¡åˆ°éœ€è¦åŠ é€Ÿ
 
-	BOOL ScoreCheck(int s);		//ÅĞ¶Ï·ÖÊıÊÇ·ñÀÛ¼Æµ½ĞèÒª¼ÓËÙ
+	void FixBricks();		//ç¡®å®šå½“å‰æ–¹å—ä½ç½®ï¼Œå†™å…¥åœ°å›¾
 
-	void FixBricks();		//È·¶¨µ±Ç°·½¿éÎ»ÖÃ£¬Ğ´ÈëµØÍ¼
+	void NewRound();		//å‡†å¤‡æ–°ä¸€è½®æ–¹å—æ‰è½åˆå§‹åŒ–
 
-	void NewRound();		//×¼±¸ĞÂÒ»ÂÖ·½¿éµôÂä³õÊ¼»¯
+	int RowCheck();			//æ£€æŸ¥æ‰€æœ‰è¡Œï¼Œåˆ¤æ–­æ¶ˆè¡Œæ“ä½œ
 
-	int RowCheck();			//¼ì²éËùÓĞĞĞ£¬ÅĞ¶ÏÏûĞĞ²Ù×÷
+	void DeleteRow(int n);		//æ¸…é™¤ä¸€è¡Œ
 
-	void DeleteRow(int n);		//Çå³ıÒ»ĞĞ
+	void NewGame();		//æ–°æ¸¸æˆåˆå§‹åŒ–
 
-	void NewGame();		//ĞÂÓÎÏ·³õÊ¼»¯
-
-	void InitNextBrick();		//³õÊ¼»¯ÏÂÒ»¸ö·½¿é
+	void InitNextBrick();		//åˆå§‹åŒ–ä¸‹ä¸€ä¸ªæ–¹å—
 };

@@ -1,7 +1,6 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "GameManager.h"
 #include <ctime>
-
 
 GameManager::GameManager()
 {
@@ -12,13 +11,15 @@ GameManager::GameManager()
 			bcgSquare[i][j].x = i;
 			bcgSquare[i][j].y = j;
 		}
-		for (int j = -4, k = 20; j < 0; j++,k++) {
+		/*
+		for (int j = -4, k = 20; j < 0; j++, k++) {
 			bcgSquare[i][k].x = i;
 			bcgSquare[i][k].y = j;
 		}
+		*/
 	}
 
-	//ÏÂÒ»¸ö·½¿é
+	//ä¸‹ä¸€ä¸ªæ–¹å—
 	for (int i = 0; i <= 3; i++)
 	{
 		for (int j = 0; j <= 3; j++)
@@ -27,19 +28,16 @@ GameManager::GameManager()
 			nextSquare[i][j].y = j;
 		}
 	}
-
 }
 
-
-//³õÊ¼»¯ÏÂÒ»¸ö·½¿é
+//åˆå§‹åŒ–ä¸‹ä¸€ä¸ªæ–¹å—
 void GameManager::InitNextBrick()
 {
-	srand( time(0));
+	srand(time(0));
 	brickNext = rand() % 7;
 }
 
-
-//ĞÂÓÎÏ·³õÊ¼»¯
+//æ–°æ¸¸æˆåˆå§‹åŒ–
 void GameManager::NewGame()
 {
 	for (int i = 0; i < WidthBySquare; i++)
@@ -50,24 +48,23 @@ void GameManager::NewGame()
 		}
 	}
 	InitNextBrick();
+	centre.set(WidthBySquare / 2, -2);
 	score = 0;
 	interTime = 500;
 	gameState = READY;
 }
 
-
-//ĞÂÒ»ÂÖ·½¿éµôÂäµÄ³õÊ¼»¯
+//æ–°ä¸€è½®æ–¹å—æ‰è½çš„åˆå§‹åŒ–
 void GameManager::NewRound()
 {
-			
-	brickState = 0;						//·½¿éµÄĞı×ªĞÎÌ¬
+	brickState = 0;						//æ–¹å—çš„æ—‹è½¬å½¢æ€
 	InitNextBrick();
-	brickType = brickNext;//·½¿éµÄÖÖÀà
-	//³õÊ¼»¯·½¿é³öÏÖÔÚµØÍ¼ÉÏµÄÖĞĞÄµã
-	centre.set(WidthBySquare / 2, -2 );
+	brickType = brickNext;//æ–¹å—çš„ç§ç±»
+	//åˆå§‹åŒ–æ–¹å—å‡ºç°åœ¨åœ°å›¾ä¸Šçš„ä¸­å¿ƒç‚¹
+	centre.set(WidthBySquare / 2, 0);
 }
 
-//½«·½¿éĞ´ÈëµØÍ¼
+//å°†æ–¹å—å†™å…¥åœ°å›¾
 void GameManager::FixBricks()
 {
 	for (int i = 0; i < 4; i++)
@@ -77,18 +74,18 @@ void GameManager::FixBricks()
 	}
 }
 
-//×ó±ßÅö×²¼ì²â
+//å·¦è¾¹ç¢°æ’æ£€æµ‹
 BOOL GameManager::LeftCheck(point p, Bricks d)
 {
-	for (int i = 0; i < 4; i++)//¶ÔÃ¿¸öĞ¡·½¿é·Ö±ğ½øĞĞ¼ì²é
+	for (int i = 0; i < 4; i++)//å¯¹æ¯ä¸ªå°æ–¹å—åˆ†åˆ«è¿›è¡Œæ£€æŸ¥
 	{
-		//×ó±ßÊÇ·ñÎª±»Ğ´ÈëµØÍ¼µÄ·½¿é
+		//å·¦è¾¹æ˜¯å¦ä¸ºè¢«å†™å…¥åœ°å›¾çš„æ–¹å—
 		if (bcgSquare[p.x + d.p[i].x - 1][p.y + d.p[i].y].state)
 		{
 			return true;
 		}
 
-		//×ó±ßÊÇ·ñÎªÇ½
+		//å·¦è¾¹æ˜¯å¦ä¸ºå¢™
 		if (p.x + d.p[i].x >= WidthBySquare || p.x + d.p[i].x - 1 < 0)
 		{
 			return true;
@@ -97,19 +94,19 @@ BOOL GameManager::LeftCheck(point p, Bricks d)
 	return false;
 }
 
-//ÓÒ±ßÅö×²¼ì²â
+//å³è¾¹ç¢°æ’æ£€æµ‹
 BOOL GameManager::RightCheck(point p, Bricks d)
 {
-	for (int i = 0; i < 4; i++)//¶ÔÃ¿¸öĞ¡·½¿é·Ö±ğ½øĞĞ¼ì²é
+	for (int i = 0; i < 4; i++)//å¯¹æ¯ä¸ªå°æ–¹å—åˆ†åˆ«è¿›è¡Œæ£€æŸ¥
 	{
-		//ÓÒ±ßÊÇ·ñÎª±»Ğ´ÈëµØÍ¼µÄ·½¿é
+		//å³è¾¹æ˜¯å¦ä¸ºè¢«å†™å…¥åœ°å›¾çš„æ–¹å—
 		if (bcgSquare[p.x + d.p[i].x + 1][p.y + d.p[i].y].state)
 		{
 			return true;
 		}
 
-		//ÓÒ±ßÊÇ·ñÎªÇ½
-		if (p.x + d.p[i].x + 1>= WidthBySquare)
+		//å³è¾¹æ˜¯å¦ä¸ºå¢™
+		if (p.x + d.p[i].x + 1 >= WidthBySquare)
 		{
 			return true;
 		}
@@ -117,18 +114,18 @@ BOOL GameManager::RightCheck(point p, Bricks d)
 	return false;
 }
 
-//ÏÂ±ßÅö×²¼ì²â
+//ä¸‹è¾¹ç¢°æ’æ£€æµ‹
 BOOL GameManager::BelowCheck(point p, Bricks d)
 {
-	for (int i = 0; i < 4; i++)//¶ÔÃ¿¸öĞ¡·½¿é·Ö±ğ½øĞĞ¼ì²é
+	for (int i = 0; i < 4; i++)//å¯¹æ¯ä¸ªå°æ–¹å—åˆ†åˆ«è¿›è¡Œæ£€æŸ¥
 	{
-		//ÏÂ±ßÊÇ·ñÎª±»Ğ´ÈëµØÍ¼µÄ·½¿é
+		//ä¸‹è¾¹æ˜¯å¦ä¸ºè¢«å†™å…¥åœ°å›¾çš„æ–¹å—
 		if (bcgSquare[p.x + d.p[i].x][p.y + d.p[i].y + 1].state)
 		{
 			return true;
 		}
 
-		//ÏÂ±ßÊÇ·ñÎªÇ½
+		//ä¸‹è¾¹æ˜¯å¦ä¸ºå¢™
 		if (p.y + d.p[i].y + 1 >= HeightBySquare)
 		{
 			return true;
@@ -137,12 +134,12 @@ BOOL GameManager::BelowCheck(point p, Bricks d)
 	return false;
 }
 
-//ÉÏ±ßÅö×²¼ì²â
+//ä¸Šè¾¹ç¢°æ’æ£€æµ‹
 BOOL GameManager::TopCheck(point p, Bricks d)
 {
-	for (int i = 0; i < 4; i++)//¶ÔÃ¿¸öĞ¡·½¿é·Ö±ğ½øĞĞ¼ì²é
+	for (int i = 0; i < 4; i++)//å¯¹æ¯ä¸ªå°æ–¹å—åˆ†åˆ«è¿›è¡Œæ£€æŸ¥
 	{
-		//ÉÏ±ßÊÇ·ñÎªÇ½
+		//ä¸Šè¾¹æ˜¯å¦ä¸ºå¢™
 		if (p.y + d.p[i].y == 0)
 		{
 			return true;
@@ -151,23 +148,23 @@ BOOL GameManager::TopCheck(point p, Bricks d)
 	return false;
 }
 
-//Ğı×ªÅö×²¼ì²â
+//æ—‹è½¬ç¢°æ’æ£€æµ‹
 BOOL GameManager::RotateCheck(point p, Bricks d)
 {
-	for (int i = 0; i < 4; i++)//¶ÔÃ¿¸öĞ¡·½¿é·Ö±ğ½øĞĞ¼ì²é
+	for (int i = 0; i < 4; i++)//å¯¹æ¯ä¸ªå°æ–¹å—åˆ†åˆ«è¿›è¡Œæ£€æŸ¥
 	{
-		//·½¿éÅö×²¼ì²â
-		if (bcgSquare[p.x + d.p[i].x ][p.y + d.p[i].y].state)
+		//æ–¹å—ç¢°æ’æ£€æµ‹
+		if (bcgSquare[p.x + d.p[i].x][p.y + d.p[i].y].state)
 		{
 			return true;
 		}
 
-		//Ç½Åö×²¼ì²â
+		//å¢™ç¢°æ’æ£€æµ‹
 		if (p.x + d.p[i].x >= WidthBySquare || p.x + d.p[i].x < 0)
 		{
 			return true;
 		}
-		if (p.y + d.p[i].y >= HeightBySquare )
+		if (p.y + d.p[i].y >= HeightBySquare)
 		{
 			return true;
 		}
@@ -175,10 +172,10 @@ BOOL GameManager::RotateCheck(point p, Bricks d)
 	return false;
 }
 
-//·½¿éÏÂÒÆ
+//æ–¹å—ä¸‹ç§»
 BOOL GameManager::MoveDown()
 {
-	if (!BelowCheck(point(centre.x, centre.y + 1),bricks[brickType][brickState]))
+	if (!BelowCheck(point(centre.x, centre.y), bricks[brickType][brickState]))
 	{
 		centre.set(centre.x, centre.y + 1);
 
@@ -187,10 +184,10 @@ BOOL GameManager::MoveDown()
 	return false;
 }
 
-//·½¿é×óÒÆ
+//æ–¹å—å·¦ç§»
 BOOL GameManager::MoveLeft()
 {
-	if (!LeftCheck(point(centre.x - 1, centre.y), bricks[brickType][brickState]))
+	if (!LeftCheck(point(centre.x, centre.y), bricks[brickType][brickState]))
 	{
 		centre.set(centre.x - 1, centre.y);
 		return true;
@@ -198,10 +195,10 @@ BOOL GameManager::MoveLeft()
 	return false;
 }
 
-//·½¿éÓÒÒÆ
+//æ–¹å—å³ç§»
 BOOL GameManager::MoveRight()
 {
-	if (!RightCheck(point(centre.x + 1, centre.y), bricks[brickType][brickState]))
+	if (!RightCheck(point(centre.x, centre.y), bricks[brickType][brickState]))
 	{
 		centre.set(centre.x + 1, centre.y);
 		return true;
@@ -209,7 +206,7 @@ BOOL GameManager::MoveRight()
 	return false;
 }
 
-//Ğı×ª
+//æ—‹è½¬
 BOOL GameManager::RotateTop()
 {
 	if (!RotateCheck(centre, bricks[brickType][(brickState + 1) % 4]))
@@ -221,44 +218,32 @@ BOOL GameManager::RotateTop()
 	return false;
 }
 
-//É¾³ıÖ¸¶¨Ò»ĞĞ
+//åˆ é™¤æŒ‡å®šä¸€è¡Œ
 void GameManager::DeleteRow(int n)
 {
 	for (int i = 0; i < WidthBySquare; i++)
 	{
-		for (int j = HeightBySquare - 1; j >= n ; j--)
+		for (int j = HeightBySquare - 1; j >= n; j--)
 		{
-			bcgSquare[i][j].state = bcgSquare[i][j -1].state;
+			bcgSquare[i][j].state = bcgSquare[i][j - 1].state;
 		}
 	}
 }
 
-//¼ì²éĞĞ
+//æ£€æŸ¥è¡Œ
 int GameManager::RowCheck()
 {
-	int a[HeightBySquare] = { 1 };     //¼ÇÂ¼ÒªÉ¾³ıµÄĞĞ,¹ı³ÌÖĞa[0]-1´ú±í×ÅĞèÒªÉ¾³ıµÄĞĞÊı
-	for (int j = HeightBySquare - 1; j >= 0 ; j--)
+	int a[HeightBySquare] = { 0 };   //è®°å½•è¦åˆ é™¤çš„è¡Œ,è¿‡ç¨‹ä¸­a[0]-1ä»£è¡¨ç€éœ€è¦åˆ é™¤çš„è¡Œæ•°
+
+	for (int j = HeightBySquare - 1; j > 0; j--)
 	{
-		BOOL k = true;
-		for (int i = 1; i <= WidthBySquare; i++)
-		{
-			if (!bcgSquare[i][j].state)
-			{
-				k = false;
-				break;
-			}
-		}
-		if (k)
-		{
-			a[a[0]++] = j;
-		}
 	}
-	for (int i = a[0] - 1; i >= 1; i--)
+	for (int i = a[0]; i >= 2; i--)
 	{
-		DeleteRow(a[i]);		//É¾³ıÓĞ¼ÇÂ¼µÄĞĞ
+		DeleteRow(a[i]);		//åˆ é™¤æœ‰è®°å½•çš„è¡Œ
 	}
-	
-	return a[0] - 1;			//·µ»ØÉ¾³ıÁËµÄĞĞÊı
+
+	return a[0] - 1;			//è¿”å›åˆ é™¤äº†çš„è¡Œæ•°
 }
 
 BOOL GameManager::ScoreCheck(int s) {
@@ -267,5 +252,3 @@ BOOL GameManager::ScoreCheck(int s) {
 	}
 	return FALSE;
 }
-
-
