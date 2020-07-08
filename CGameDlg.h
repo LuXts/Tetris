@@ -29,7 +29,7 @@ protected:
 public:
 	virtual BOOL DestroyWindow();
 	virtual BOOL OnInitDialog();
-	afx_msg void OnBnClickedButton1();
+//	afx_msg void OnBnClickedButton1();
 
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 	// 游戏主要显示区域
@@ -39,4 +39,8 @@ public:
 	afx_msg BOOL OnHelpInfo(HELPINFO* pHelpInfo);
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
+private:
+	CString _Diff;
+public:
+	CString _Score;
 };

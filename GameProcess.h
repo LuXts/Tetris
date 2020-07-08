@@ -17,7 +17,7 @@ public:
 	GameProcess(GameSDL* A);
 	UINT BeginGame(LPVOID param);
 	void DrawMap(int x, int y, int type, int state, SingleSquare bcgSquare[WidthBySquare][HeightBySquare]);
+	void DrawNext();
 	//BOOL BeginGame();
 	BOOL Around();//一个方块的游戏流程
-	BOOL InitBrick();//将方块移动到最上端；
 };

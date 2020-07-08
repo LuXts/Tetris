@@ -17,6 +17,8 @@ IMPLEMENT_DYNAMIC(CGameDlg, CDialogEx)
 
 CGameDlg::CGameDlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_GAME_DIALOG, pParent), _Game(NULL)
+	, _Diff(_T(""))
+	, _Score(_T(""))
 {
 }
 
@@ -29,10 +31,11 @@ void CGameDlg::DoDataExchange(CDataExchange* pDX)
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_GAME_WINDOW, GameArea);
 	DDX_Control(pDX, IDC_NEXT_BRICK_PIC, NextArea);
+	DDX_Text(pDX, IDC_DIFF_TEXT, _Diff);
+	DDX_Text(pDX, IDC_SCORE_TEXT, _Score);
 }
 
 BEGIN_MESSAGE_MAP(CGameDlg, CDialogEx)
-	ON_BN_CLICKED(IDC_BUTTON1, &CGameDlg::OnBnClickedButton1)
 	//	ON_WM_SHOWWINDOW()
 	ON_WM_CTLCOLOR()
 	ON_WM_HELPINFO()
@@ -73,51 +76,13 @@ BOOL CGameDlg::OnInitDialog()
 	_GProcess = new GameProcess(_Game);
 
 	_GProcess->TetrisManger.NewGame();
-
+	_GProcess->DrawNext();
 	SetTimer(17, 10, NULL);
 
 	// TODO:  在此添加额外的初始化
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 				  // 异常: OCX 属性页应返回 FALSE
-}
-
-void CGameDlg::OnBnClickedButton1()
-{
-	/*static int x = 0, y = 0;
-
-	_Game->MainRendererClear();
-
-	_Game->MainAddBrick(x, y);
-	_Game->MainAddBrick(x + 1, y);
-	_Game->MainAddBrick(x, y + 1);
-	_Game->MainAddBrick(x + 1, y + 1);
-
-	_Game->MainRendererPresent();
-
-	_Game->NextRendererClear();
-	_Game->NextAddBrick(x % 4, y % 4);
-	_Game->NextRendererPresent();
-
-	x++;
-	y++;
-	x = x % 10;
-	y = y % 10;*/
-
-	// TODO: 在此添加控件通知处理程序代码
-	/*
-	GameProcess A(_Game);
-	A.TetrisManger.NewGame();
-	A.TetrisManger.NewRound();
-	A.InitBrick();
-	for (int i = 0; i < 5; i++) {
-		A.TetrisManger.MoveDown();
-	}
-	A.TetrisManger.FixBricks();
-	A.TetrisManger.NewRound();
-	A.InitBrick();
-	A.DrawMap(A.TetrisManger.centre.x, (A.TetrisManger.centre.y + 3), A.TetrisManger.brickType, A.TetrisManger.brickState, A.TetrisManger.bcgSquare);
-	*/
 }
 
 HBRUSH CGameDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
@@ -136,7 +101,7 @@ BOOL CGameDlg::OnHelpInfo(HELPINFO* pHelpInfo)
 {
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
 
-	return true;
+	return TRUE;
 }
 
 BOOL CGameDlg::PreTranslateMessage(MSG* pMsg)
@@ -162,6 +127,10 @@ BOOL CGameDlg::PreTranslateMessage(MSG* pMsg)
 		if (pMsg->wParam == VK_RIGHT)
 		{
 			Globe.KEY_RIGHT = TRUE;
+			return TRUE;
+		}
+		if (pMsg->wParam == VK_ESCAPE) {
+			MessageBox(_T("222"));
 			return TRUE;
 		}
 	}
@@ -198,7 +167,14 @@ void CGameDlg::OnTimer(UINT_PTR nIDEvent)
 {
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
 	if (nIDEvent == 17) {
-		_GProcess->Around();
+		_Score.Format(_T("%d"), _GProcess->score);
+		_Diff.Format(_T("%d"), _GProcess->score / 1000 + 1);
+
+		UpdateData(FALSE);
+		if (_GProcess->Around()) {
+			KillTimer(17);
+		}
+		return;
 	}
 	CDialogEx::OnTimer(nIDEvent);
 }
