@@ -8,7 +8,6 @@
 #define IDD_TETRIS_DIALOG               102
 #define IDR_MAINFRAME                   128
 #define IDD_GAME_DIALOG                 130
-#define IDD_DIALOG1                     133
 #define IDC_BUTTON1                     1000
 #define IDC_BUTTON2                     1001
 #define IDC_BUTTON3                     1002

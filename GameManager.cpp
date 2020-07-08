@@ -223,7 +223,7 @@ void GameManager::DeleteRow(int n)
 {
 	for (int i = 0; i < WidthBySquare; i++)
 	{
-		for (int j = HeightBySquare - 1; j >= n; j--)
+		for (int j = n; j < HeightBySquare; j++)
 		{
 			bcgSquare[i][j].state = bcgSquare[i][j - 1].state;
 		}
@@ -233,17 +233,27 @@ void GameManager::DeleteRow(int n)
 //检查行
 int GameManager::RowCheck()
 {
+	int total = 0;
 	int a[HeightBySquare] = { 0 };   //记录要删除的行,过程中a[0]-1代表着需要删除的行数
 
-	for (int j = HeightBySquare - 1; j > 0; j--)
+	for (int j = 0; j < HeightBySquare; j++)
 	{
+		bool test = true;
+		for (int i = 0; i < WidthBySquare; i++) {
+			test = test & bcgSquare[i][j].state;
+		}
+		if (test) {
+			a[j] = 1;
+		}
+		total += test;
 	}
-	for (int i = a[0]; i >= 2; i--)
-	{
-		DeleteRow(a[i]);		//删除有记录的行
+	for (int j = 0; j < HeightBySquare; j++) {
+		if (a[j] == 1) {
+			DeleteRow(j);
+		}
 	}
 
-	return a[0] - 1;			//返回删除了的行数
+	return total;			//返回删除了的行数
 }
 
 BOOL GameManager::ScoreCheck(int s) {
