@@ -64,6 +64,7 @@ void GameManager::NewRound()
 	brickState = 0;						//方块的旋转形态
 	brickType = brickNext;//方块的种类
 	InitNextBrick();
+
 	//初始化方块出现在地图上的中心点
 	centre.set(WidthBySquare / 2, 2);
 }
@@ -236,6 +237,7 @@ int GameManager::RowCheck()
 			total += 1;
 		}
 	}
+
 	for (int j = 0; j < HeightBySquare; j++) {
 		if (a[j] == 1) {
 			DeleteRow(j);
