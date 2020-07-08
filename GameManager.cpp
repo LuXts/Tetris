@@ -63,7 +63,7 @@ void GameManager::NewRound()
 	brickState = 0;						//方块的旋转形态
 	InitNextBrick();
 	//初始化方块出现在地图上的中心点
-	centre.set(WidthBySquare / 2, -2 );
+	centre.set(WidthBySquare / 2, 0 );
 }
 
 //将方块写入地图
@@ -235,11 +235,11 @@ void GameManager::DeleteRow(int n)
 //检查行
 int GameManager::RowCheck()
 {
-	int a[HeightBySquare] = { 1 };     //记录要删除的行,过程中a[0]-1代表着需要删除的行数
+	int a[HeightBySquare] = { 1 };     //记录要删除的行
 	for (int j = HeightBySquare - 1; j >= 0 ; j--)
 	{
 		BOOL k = true;
-		for (int i = 1; i <= WidthBySquare; i++)
+		for (int i = 0; i < WidthBySquare; i++)
 		{
 			if (!bcgSquare[i][j].state)
 			{
@@ -252,7 +252,7 @@ int GameManager::RowCheck()
 			a[a[0]++] = j;
 		}
 	}
-	for (int i = a[0] - 1; i >= 1; i--)
+	for (int i = a[0]; i >= 2; i--)
 	{
 		DeleteRow(a[i]);		//删除有记录的行
 	}

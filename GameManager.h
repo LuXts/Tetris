@@ -18,7 +18,7 @@ enum GameState {
 
 class GameManager {
 public:
-	SingleSquare bcgSquare[WidthBySquare][HeightBySquare+4];		//背景方块，其中的[][20],[][21],[][22],[][23]分别
+	SingleSquare bcgSquare[WidthBySquare][HeightBySquare];		//背景方块，其中的[][20],[][21],[][22],[][23]分别
 																	//表示从上往下数被隐去的第-4，-3，-2，-1行
 	SingleSquare nextSquare[4][4];		//下一个方块
 
