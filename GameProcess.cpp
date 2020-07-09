@@ -100,7 +100,9 @@ BOOL GameProcess::Around() {
 			TetrisManger.FixBricks();
 			int temp = TetrisManger.RowCheck();
 			score = score + (temp * temp) * Singlescore * (1 + (double)score / 10000);
-			LOG_DEBUG("Score: %d", score);
+			if (temp != 0) {
+				LOG_DEBUG("Score: %d", score);
+			}
 			TetrisManger.NewRound();
 			DrawNext();
 		}

@@ -110,6 +110,7 @@ HBRUSH CGameDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 	auto i = pWnd->GetDlgCtrlID();
 	if (i == IDC_GAME_WINDOW || i == IDC_NEXT_BRICK_PIC) {
 		_Game->MainRendererPresent();
+		_Game->NextRendererPresent();
 	}
 
 	switch (nCtlColor)

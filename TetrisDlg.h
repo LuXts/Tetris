@@ -35,11 +35,10 @@ public:
 	afx_msg void OnStnClickedRankButton();
 	afx_msg void OnStnClickedExitButton();
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
 private:
 	CStaticEX _Start_Button;
 	CStaticEX _Rank_Button;
 	CStaticEX _Quit_Button;
 	virtual void OnOK();
-public:
-	virtual BOOL PreTranslateMessage(MSG* pMsg);
 };

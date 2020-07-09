@@ -27,6 +27,7 @@ public:
 	afx_msg void OnStnClickedBackStatic();
 	afx_msg void OnStnClickedExitStatic();
 	afx_msg BOOL OnHelpInfo(HELPINFO* pHelpInfo);
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
 private:
 	bool* _Exit;
 	int _Score;
@@ -34,6 +35,4 @@ private:
 	CStatic _OverGame;
 	CStaticEX _Back_Button;
 	CStaticEX _Exit_Button;
-public:
-	virtual BOOL PreTranslateMessage(MSG* pMsg);
 };

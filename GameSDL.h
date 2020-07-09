@@ -15,9 +15,7 @@ private:
 	SDL_Texture* _Main_tex;
 	SDL_Texture* _Next_tex;
 
-	static Mix_Chunk* _bgm1;
-	static Mix_Chunk* _bgm2;
-	static Mix_Chunk* _bgm3;
+	static Mix_Chunk* _bgm;
 
 	static Mix_Chunk* _Sound_Effect_Button_Hover;
 	static Mix_Chunk* _Sound_Effect_Button_Down;
@@ -36,6 +34,7 @@ public:
 	static void QuitGame();
 
 	// 以下为提供的接口
+
 	// 清空主场景画布
 	void MainRendererClear();
 	// 主场景添加正方形
@@ -52,13 +51,18 @@ public:
 
 	// 音频相关接口
 
+	// 开始背景音乐
 	static void StartBKMusic();
 
+	// 停止背景音乐
 	static void EndBKMusic();
 
+	// 播放鼠标移动到按钮音效
 	static void ButtonHoverSound();
 
+	// 播放按钮按下音效
 	static void ButtonDownSound();
 
+	// 音频处理回调函数
 	static void DealMusic(int  channel);
 };

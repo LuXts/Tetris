@@ -2,45 +2,42 @@
 #include "GameSDL.h"
 #include "Log.h"
 
-Mix_Chunk* GameSDL::_bgm1 = NULL;
-Mix_Chunk* GameSDL::_bgm2 = NULL;
-Mix_Chunk* GameSDL::_bgm3 = NULL;
+Mix_Chunk* GameSDL::_bgm = NULL;
 Mix_Chunk* GameSDL::_Sound_Effect_Button_Hover = NULL;
 Mix_Chunk* GameSDL::_Sound_Effect_Button_Down = NULL;
 
 void GameSDL::DealMusic(int  channel) {
 	static bool t = true;
+	static int temp = 3;
 	if (t) {
 		srand(time(0));
 		t = false;
 	}
 
 	if (channel == 1) {
-		int i = rand() % 3;
+		int i;
+		while (true) {
+			i = rand() % 3;
+			if (i != temp) {
+				break;
+			}
+		}
+
 		switch (i) {
 		case 0:
-			_bgm1 = Mix_LoadWAV("res\\bgm1.mp3");
-			Mix_FadeInChannel(channel, _bgm1, 1, 1000);
-			Mix_FreeChunk(_bgm2);
-			Mix_FreeChunk(_bgm3);
-			_bgm2 = NULL;
-			_bgm3 = NULL;
+			Mix_FreeChunk(_bgm);
+			_bgm = Mix_LoadWAV("res\\bgm1.mp3");
+			Mix_FadeInChannel(channel, _bgm, 1, 1000);
 			break;
 		case 1:
-			_bgm2 = Mix_LoadWAV("res\\bgm2.mp3");
-			Mix_FadeInChannel(channel, _bgm2, 1, 1000);
-			Mix_FreeChunk(_bgm1);
-			Mix_FreeChunk(_bgm3);
-			_bgm1 = NULL;
-			_bgm3 = NULL;
+			Mix_FreeChunk(_bgm);
+			_bgm = Mix_LoadWAV("res\\bgm2.mp3");
+			Mix_FadeInChannel(channel, _bgm, 1, 1000);
 			break;
 		case 2:
-			_bgm3 = Mix_LoadWAV("res\\bgm3.mp3");
-			Mix_FadeInChannel(channel, _bgm3, 1, 1000);
-			Mix_FreeChunk(_bgm1);
-			Mix_FreeChunk(_bgm2);
-			_bgm1 = NULL;
-			_bgm2 = NULL;
+			Mix_FreeChunk(_bgm);
+			_bgm = Mix_LoadWAV("res\\bgm3.mp3");
+			Mix_FadeInChannel(channel, _bgm, 1, 1000);
 			break;
 		}
 	}
@@ -76,30 +73,28 @@ void GameSDL::InitGame() {
 		LOG(lena::LOG_LEVEL_ERROR, "IMG_Init: Failed to init required png support!\n");
 		LOG(lena::LOG_LEVEL_ERROR, "IMG_Init: %s\n", IMG_GetError());
 	}
-	int MIX_flag = MIX_INIT_MP3 | MIX_INIT_FLAC;
+	int MIX_flag = MIX_INIT_MP3;
 	int MIX_initted = Mix_Init(MIX_flag);
 	if ((MIX_initted & MIX_flag) != MIX_flag) {
 		LOG(lena::LOG_LEVEL_ERROR, "Mix_Init: Failed to init required music support!\n");
 		LOG(lena::LOG_LEVEL_ERROR, "Mix_Init: %s\n", Mix_GetError());
 	}
 
-	Mix_OpenAudio(44100, AUDIO_S16SYS, 2, 8192);
+	Mix_OpenAudio(44100, AUDIO_S16SYS, 2, 4096);
 
 	_Sound_Effect_Button_Hover = Mix_LoadWAV("res\\Button.wav");
 
 	Mix_Volume(2, 24);
 	Mix_Volume(3, 24);
 
-	if (_Sound_Effect_Button_Hover == NULL || _Sound_Effect_Button_Down == NULL) {
+	if (_Sound_Effect_Button_Hover == NULL) {
 		LOG(lena::LOG_LEVEL_ERROR, "Mix_Init: Failed to load music!\n");
 		LOG(lena::LOG_LEVEL_ERROR, "Mix_Init: %s\n", Mix_GetError());
 	}
 }
 
 void GameSDL::QuitGame() {
-	Mix_FreeChunk(_bgm1);
-	Mix_FreeChunk(_bgm2);
-	Mix_FreeChunk(_bgm3);
+	Mix_FreeChunk(_bgm);
 	Mix_FreeChunk(_Sound_Effect_Button_Down);
 	Mix_FreeChunk(_Sound_Effect_Button_Hover);
 	Mix_CloseAudio();
@@ -165,6 +160,9 @@ GameSDL::GameSDL(void* handle_1, void* handle_2) :_Main_win(NULL), _Main_ren(NUL
 }
 
 GameSDL::~GameSDL() {
+	if (_Next_tex) {
+		SDL_DestroyTexture(_Next_tex);
+	}
 	if (_Main_tex) {
 		SDL_DestroyTexture(_Main_tex);
 	}
