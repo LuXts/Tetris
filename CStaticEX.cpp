@@ -5,6 +5,8 @@
 #include "Tetris.h"
 #include "CStaticEX.h"
 
+#include "GameSDL.h"
+
 // CStaticEX
 
 IMPLEMENT_DYNAMIC(CStaticEX, CStatic)
@@ -51,6 +53,7 @@ void CStaticEX::OnMouseMove(UINT nFlags, CPoint point)
 
 LRESULT CStaticEX::OnMouseHover(WPARAM wParam, LPARAM lParam)
 {
+	GameSDL::ButtonHoverSound();
 	m_clrCurTextColor = m_clrHoverTextColor;
 	Invalidate();
 	TRACE("OnMouseHover\n");

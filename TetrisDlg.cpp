@@ -77,6 +77,8 @@ BOOL CTetrisDlg::OnInitDialog()
 
 	Globe.dlg = this;
 
+	GameSDL::StartBKMusic();
+
 	// TODO: 在此添加额外的初始化代码
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
@@ -123,34 +125,12 @@ HCURSOR CTetrisDlg::OnQueryDragIcon()
 
 BOOL CTetrisDlg::OnHelpInfo(HELPINFO* pHelpInfo)
 {
-	// TODO: 在此添加消息处理程序代码和/或调用默认值
-
 	return true;
 }
 
-//void CTetrisDlg::OnBnClickedStartButton()
-//{
-//	CGameDlg dlg;
-//	this->ShowWindow(SW_HIDE);
-//	dlg.DoModal();
-//	// TODO: 在此添加控件通知处理程序代码
-//}
-
-//void CTetrisDlg::OnBnClickedQuitButton()
-//{
-//	this->OnOK();
-//	// TODO: 在此添加控件通知处理程序代码
-//}
-
-//void CTetrisDlg::OnBnClickedRankButton()
-//{
-//	CRankList dlg;
-//	dlg.DoModal();
-//	// TODO: 在此添加控件通知处理程序代码
-//}
-
 void CTetrisDlg::OnStnClickedStartButton()
 {
+	GameSDL::ButtonDownSound();
 	CGameDlg dlg;
 	this->ShowWindow(SW_HIDE);
 	dlg.DoModal();
@@ -158,12 +138,14 @@ void CTetrisDlg::OnStnClickedStartButton()
 
 void CTetrisDlg::OnStnClickedRankButton()
 {
+	GameSDL::ButtonDownSound();
 	CRankList dlg;
 	dlg.DoModal();
 }
 
 void CTetrisDlg::OnStnClickedExitButton()
 {
+	GameSDL::ButtonDownSound();
 	this->OnOK();
 }
 
@@ -172,4 +154,11 @@ HBRUSH CTetrisDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 	HBRUSH hbr = CDialogEx::OnCtlColor(pDC, pWnd, nCtlColor);
 
 	return hbr;
+}
+
+void CTetrisDlg::OnOK()
+{
+	// TODO: 在此添加专用代码和/或调用基类
+	GameSDL::EndBKMusic();
+	CDialogEx::OnOK();
 }

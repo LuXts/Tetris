@@ -97,9 +97,9 @@ int Log::createFile() {
 
 bool Log::writeLog(LOGLEVEL inLevel, const char* fileName, const char* function,
 	int lineNumber, const char* format, ...) {
-	if (!mFile) {
-		createFile();
-	}
+	//if (!mFile) {
+	//	createFile();
+	//}
 
 	if (inLevel > logLevel) {
 		return false;

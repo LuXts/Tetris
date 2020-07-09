@@ -2,10 +2,71 @@
 #include "GameSDL.h"
 #include "Log.h"
 
+Mix_Chunk* GameSDL::_bgm1 = NULL;
+Mix_Chunk* GameSDL::_bgm2 = NULL;
+Mix_Chunk* GameSDL::_bgm3 = NULL;
+Mix_Chunk* GameSDL::_Sound_Effect_Button_Hover = NULL;
+Mix_Chunk* GameSDL::_Sound_Effect_Button_Down = NULL;
+
+void GameSDL::DealMusic(int  channel) {
+	static bool t = true;
+	if (t) {
+		srand(time(0));
+		t = false;
+	}
+
+	if (channel == 1) {
+		int i = rand() % 3;
+		switch (i) {
+		case 0:
+			_bgm1 = Mix_LoadWAV("res\\bgm1.mp3");
+			Mix_FadeInChannel(channel, _bgm1, 1, 1000);
+			Mix_FreeChunk(_bgm2);
+			Mix_FreeChunk(_bgm3);
+			_bgm2 = NULL;
+			_bgm3 = NULL;
+			break;
+		case 1:
+			_bgm2 = Mix_LoadWAV("res\\bgm2.mp3");
+			Mix_FadeInChannel(channel, _bgm2, 1, 1000);
+			Mix_FreeChunk(_bgm1);
+			Mix_FreeChunk(_bgm3);
+			_bgm1 = NULL;
+			_bgm3 = NULL;
+			break;
+		case 2:
+			_bgm3 = Mix_LoadWAV("res\\bgm3.mp3");
+			Mix_FadeInChannel(channel, _bgm3, 1, 1000);
+			Mix_FreeChunk(_bgm1);
+			Mix_FreeChunk(_bgm2);
+			_bgm1 = NULL;
+			_bgm2 = NULL;
+			break;
+		}
+	}
+}
+
+void GameSDL::StartBKMusic() {
+	DealMusic(1);
+	Mix_ChannelFinished(DealMusic);
+}
+
+void GameSDL::EndBKMusic() {
+	Mix_FadeOutChannel(1, 1000);
+}
+
+void GameSDL::ButtonHoverSound() {
+	Mix_PlayChannel(2, _Sound_Effect_Button_Hover, 1);
+}
+
+void GameSDL::ButtonDownSound() {
+	Mix_PlayChannel(3, _Sound_Effect_Button_Hover, 1);
+}
+
 void GameSDL::InitGame() {
 	int SDL_flag = SDL_INIT_EVERYTHING;
 	int SDL_initted = SDL_Init(SDL_flag);
-	if (SDL_initted != 0) {
+	if ((SDL_initted & SDL_flag) != SDL_flag) {
 		LOG(lena::LOG_LEVEL_ERROR, "SDL_Init: Failed to init SDL2 support!\n");
 		LOG(lena::LOG_LEVEL_ERROR, "SDL_Init: %s\n", SDL_GetError());
 	}
@@ -15,9 +76,34 @@ void GameSDL::InitGame() {
 		LOG(lena::LOG_LEVEL_ERROR, "IMG_Init: Failed to init required png support!\n");
 		LOG(lena::LOG_LEVEL_ERROR, "IMG_Init: %s\n", IMG_GetError());
 	}
+	int MIX_flag = MIX_INIT_MP3 | MIX_INIT_FLAC;
+	int MIX_initted = Mix_Init(MIX_flag);
+	if ((MIX_initted & MIX_flag) != MIX_flag) {
+		LOG(lena::LOG_LEVEL_ERROR, "Mix_Init: Failed to init required music support!\n");
+		LOG(lena::LOG_LEVEL_ERROR, "Mix_Init: %s\n", Mix_GetError());
+	}
+
+	Mix_OpenAudio(44100, AUDIO_S16SYS, 2, 8192);
+
+	_Sound_Effect_Button_Hover = Mix_LoadWAV("res\\Button.wav");
+
+	Mix_Volume(2, 24);
+	Mix_Volume(3, 24);
+
+	if (_Sound_Effect_Button_Hover == NULL || _Sound_Effect_Button_Down == NULL) {
+		LOG(lena::LOG_LEVEL_ERROR, "Mix_Init: Failed to load music!\n");
+		LOG(lena::LOG_LEVEL_ERROR, "Mix_Init: %s\n", Mix_GetError());
+	}
 }
 
 void GameSDL::QuitGame() {
+	Mix_FreeChunk(_bgm1);
+	Mix_FreeChunk(_bgm2);
+	Mix_FreeChunk(_bgm3);
+	Mix_FreeChunk(_Sound_Effect_Button_Down);
+	Mix_FreeChunk(_Sound_Effect_Button_Hover);
+	Mix_CloseAudio();
+	Mix_Quit();
 	IMG_Quit();
 	SDL_Quit();
 }
@@ -66,8 +152,8 @@ GameSDL::GameSDL(void* handle_1, void* handle_2) :_Main_win(NULL), _Main_ren(NUL
 	SDL_GetWindowSize(_Next_win, &_Next_W, &_Next_H);
 
 	// 输出窗口宽度检查
-	LOG_DEBUG( "WindowSize: %d, %d", _Main_W, _Main_H);
-	LOG_DEBUG( "WindowSize: %d, %d", _Next_W, _Next_H);
+	LOG_DEBUG("WindowSize: %d, %d", _Main_W, _Main_H);
+	LOG_DEBUG("WindowSize: %d, %d", _Next_W, _Next_H);
 
 	// 设置渲染器背景色
 	SDL_SetRenderDrawColor(_Main_ren, 40, 44, 52, 255);

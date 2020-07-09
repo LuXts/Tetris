@@ -15,7 +15,6 @@ public:
 	//int x = 1;//判断当前的游戏状态（1表示继续下落，2表示到底，3表示在顶端）
 
 	GameProcess(GameSDL* A);
-	UINT BeginGame(LPVOID param);
 	void DrawMap(int x, int y, int type, int state, SingleSquare bcgSquare[WidthBySquare][HeightBySquare]);
 	void DrawNext();
 	//BOOL BeginGame();
