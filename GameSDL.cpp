@@ -19,6 +19,7 @@ void GameSDL::DealMusic(int  channel) {
 		while (true) {
 			i = rand() % 3;
 			if (i != temp) {
+				temp = i;
 				break;
 			}
 		}
