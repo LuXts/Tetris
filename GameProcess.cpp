@@ -72,6 +72,9 @@ BOOL GameProcess::Around() {
 	}
 	else {
 		switch (score / 1000) {
+		case 0:
+			time_down_temp = 50;
+			break;
 		case 1:
 			time_down_temp = 45;
 			break;
