@@ -6,6 +6,7 @@
 #include "CEndDlg.h"
 #include "afxdialogex.h"
 
+#include "GameSDL.h"
 #include "CRankList.h"
 // CEndDlg 对话框
 
@@ -42,6 +43,7 @@ END_MESSAGE_MAP()
 
 void CEndDlg::OnStnClickedRankButton()
 {
+	GameSDL::ButtonDownSound();
 	CRankList dlg(nullptr, _Score);
 	this->OnOK();
 	dlg.DoModal();

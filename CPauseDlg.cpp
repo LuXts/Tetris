@@ -74,12 +74,14 @@ HBRUSH CPauseDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 
 void CPauseDlg::OnStnClickedBackStatic()
 {
+	GameSDL::ButtonDownSound();
 	this->OnOK();
 	// TODO: 在此添加控件通知处理程序代码
 }
 
 void CPauseDlg::OnStnClickedExitStatic()
 {
+	GameSDL::ButtonDownSound();
 	*_Exit = true;
 	if (_Score == 0) {
 		if (Globe.dlg != NULL) {

@@ -57,7 +57,6 @@ BOOL CRankList::OnInitDialog()
 	if (szBuffer) {
 		free(szBuffer);
 	}
-	_Name = _T("老王测试员");
 
 	if (_Score > 0) {
 		if (_ScoreList.size() == 0) {
@@ -176,6 +175,7 @@ BOOL CRankList::OnHelpInfo(HELPINFO* pHelpInfo)
 
 void CRankList::OnStnClickedExitMain()
 {
+	GameSDL::ButtonDownSound();
 	this->OnOK();
 	if (Globe.dlg != NULL) {
 		Globe.dlg->ShowWindow(SW_SHOWNORMAL);

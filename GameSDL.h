@@ -2,6 +2,7 @@
 
 #include "SDL.h"
 #include "SDL_image.h"
+#include "SDL_mixer.h"
 
 class GameSDL
 {
@@ -14,8 +15,17 @@ private:
 	SDL_Texture* _Main_tex;
 	SDL_Texture* _Next_tex;
 
+	static Mix_Chunk* _bgm1;
+	static Mix_Chunk* _bgm2;
+	static Mix_Chunk* _bgm3;
+
+	static Mix_Chunk* _Sound_Effect_Button_Hover;
+	static Mix_Chunk* _Sound_Effect_Button_Down;
+
 	int _Main_W, _Main_H;
 	int _Next_W, _Next_H;
+
+	static void DealMusic(int  channel);
 
 public:
 	// 创建游戏界面
@@ -41,4 +51,14 @@ public:
 	void NextAddBrick(int x, int y);
 	// 显示下一个方块场景画布
 	void NextRendererPresent();
+
+	// 音频相关接口
+
+	static void StartBKMusic();
+
+	static void EndBKMusic();
+
+	static void ButtonHoverSound();
+
+	static void ButtonDownSound();
 };
