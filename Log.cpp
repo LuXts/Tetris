@@ -118,7 +118,7 @@ bool Log::writeLog(LOGLEVEL inLevel, const char* fileName, const char* function,
 	case LOG_LEVEL_ERROR:
 		Level = "ERROR";
 		break;
-	case LOG_LEVEL_WANING:
+	case LOG_LEVEL_WARNING:
 		Level = "WANING";
 		break;
 	case LOG_LEVEL_INFO:

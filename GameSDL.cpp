@@ -66,8 +66,8 @@ GameSDL::GameSDL(void* handle_1, void* handle_2) :_Main_win(NULL), _Main_ren(NUL
 	SDL_GetWindowSize(_Next_win, &_Next_W, &_Next_H);
 
 	// 输出窗口宽度检查
-	LOG(lena::LOG_LEVEL_DEBUG, "WindowSize: %d, %d", _Main_W, _Main_H);
-	LOG(lena::LOG_LEVEL_DEBUG, "WindowSize: %d, %d", _Next_W, _Next_H);
+	LOG_DEBUG( "WindowSize: %d, %d", _Main_W, _Main_H);
+	LOG_DEBUG( "WindowSize: %d, %d", _Next_W, _Next_H);
 
 	// 设置渲染器背景色
 	SDL_SetRenderDrawColor(_Main_ren, 40, 44, 52, 255);

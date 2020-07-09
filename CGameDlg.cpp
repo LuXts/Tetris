@@ -63,7 +63,7 @@ BOOL CGameDlg::DestroyWindow()
 	// TODO: 在此添加专用代码和/或调用基类
 	delete _Game;
 	delete _GProcess;
-	LOG(lena::LOG_LEVEL_DEBUG, "GameDlg Destroy!");
+	LOG_DEBUG( "GameDlg Destroy!");
 	return CDialogEx::DestroyWindow();
 }
 
@@ -80,7 +80,7 @@ BOOL CGameDlg::OnInitDialog()
 	CRect rect, rectClient;
 	GetWindowRect(rect);
 	GetClientRect(rectClient);
-	//LOG(lena::LOG_LEVEL_DEBUG, "Height: %d", GetSystemMetrics(SM_CYSIZE));
+	//LOG_DEBUG( "Height: %d", GetSystemMetrics(SM_CYSIZE));
 	SetWindowPos(NULL, 0, 0, 465, rect.Height() - rectClient.Height() + 600, SWP_NOMOVE);
 
 	_Game = new GameSDL(GameArea.GetSafeHwnd(), NextArea.GetSafeHwnd());

@@ -163,7 +163,7 @@ BOOL GameProcess::Around() {
 			TetrisManger.FixBricks();
 			int temp = TetrisManger.RowCheck();
 			score = score + (temp * temp) * Singlescore * (1 + (double)score / 10000);
-			LOG(lena::LOG_LEVEL_DEBUG, "Score: %d", score);
+			LOG_DEBUG( "Score: %d", score);
 			TetrisManger.NewRound();
 			DrawNext();
 		}

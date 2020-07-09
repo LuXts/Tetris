@@ -57,6 +57,8 @@ BOOL CRankList::OnInitDialog()
 	if (szBuffer) {
 		free(szBuffer);
 	}
+	_Name = _T("老王测试员");
+
 	if (_Score > 0) {
 		if (_ScoreList.size() == 0) {
 			_ScoreList.emplace_back(_Score);
