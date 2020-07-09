@@ -16,10 +16,11 @@
 # Build results
 [Dd]ebug/*
 [Dd]ebugPublic/
-[Rr]elease/
-[Rr]eleases/
-x64/
-x86/
+[Rr]elease/*
+[Rr]eleases/*
+x64/[Dd]ebug/*
+x64/[Rr]elease/*
+x64/[Rr]eleases/*
 [Aa][Rr][Mm]/
 [Aa][Rr][Mm]64/
 bld/
@@ -28,7 +29,14 @@ bld/
 [Ll]og/
 
 !lib/x86
+!lib/x64
 ![Dd]ebug/*.dll
+![Rr]elease/*.dll
+![Rr]eleases/*.dll
+!x64/Debug/*.dll
+!x64/[Rr]elease/*.dll
+!x64/[Rr]eleases/*.dll
+
 
 
 # Visual Studio 2015/2017 cache/options directory
