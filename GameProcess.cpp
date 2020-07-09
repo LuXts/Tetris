@@ -12,33 +12,6 @@ GameProcess::GameProcess(GameSDL* A) {
 	GameDraw = A;
 }
 
-UINT GameProcess::BeginGame(LPVOID param) {
-	GameProcess* ptask = (GameProcess*)param;
-	while (1) {
-		ptask->TetrisManger.NewRound();//随机产生一个方块；
-		/*此处为绘制右边提示栏“下一个方块”*/
-		/*此处为绘制此时的地图（方块出现在屏幕上）*/
-		Sleep(500);
-		/*
-		//检测是否到达底端
-		while ( ) {
-		ptask->TetrisManger.MoveDown();//向下移动一格
-		//此处为绘制此时的地图
-		Sleep(500);
-		}
-		//检测是否到达底端
-		if () {
-			ptask->TetrisManger.FixBricks();//将方块写入地图
-			ptask->TetrisManger.RowCheck();//检测是否成行消去
-		}
-		///*检测是否到达顶部
-		if () {
-			return 0;
-		}
-		*/
-	}
-	return 0;
-}
 void GameProcess::DrawMap(int x, int y, int type, int state, SingleSquare bcgSquare[WidthBySquare][HeightBySquare]) {
 	GameDraw->MainRendererClear();
 	GameDraw->MainAddBrick(x + bricks[type][state].p[0].x, y + bricks[type][state].p[0].y - 4);
@@ -97,22 +70,6 @@ BOOL GameProcess::Around() {
 		if (time_down > time_down_max) {
 			time_down = 1;
 		}
-		/*
-		if (!TetrisManger.MoveDown()) {
-			TetrisManger.FixBricks();
-			score = score + (TetrisManger.RowCheck() * TetrisManger.RowCheck()) * Singlescore;
-			if (TetrisManger.TopCheck(TetrisManger.centre, bricks[TetrisManger.brickType][TetrisManger.brickState])) {
-				x = 3;
-				n = 0;
-				DrawMap(-5, -5, 1, 1, TetrisManger.bcgSquare);
-				return TRUE;
-			}//检测是否到顶端
-			x = 2;
-			n = 0;
-			DrawMap(-5, -5, 1, 1, TetrisManger.bcgSquare);
-			return TRUE;
-		}//检测是否到底端
-		*/
 	}
 	else {
 		switch (score / 1000) {
@@ -135,10 +92,6 @@ BOOL GameProcess::Around() {
 		case 6:
 			time_down_temp = 20;
 			time_max = 2;
-			break;
-		case 7:
-			time_down_temp = 15;
-			time_max = 1;
 			break;
 		}
 		time_down_max = time_down_temp;
@@ -163,7 +116,7 @@ BOOL GameProcess::Around() {
 			TetrisManger.FixBricks();
 			int temp = TetrisManger.RowCheck();
 			score = score + (temp * temp) * Singlescore * (1 + (double)score / 10000);
-			LOG(lena::LOG_LEVEL_DEBUG, "Score: %d", score);
+			LOG_DEBUG("Score: %d", score);
 			TetrisManger.NewRound();
 			DrawNext();
 		}

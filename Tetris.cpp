@@ -67,7 +67,11 @@ BOOL CTetrisApp::InitInstance()
 	// 例如修改为公司或组织名
 	SetRegistryKey(_T("MFC practice test. "));
 
-	lena::Log::init(lena::LOG_LEVEL_WANING, lena::LOG_TARGET_ALL);
+#ifdef _DEBUG
+	lena::Log::init(lena::LOG_LEVEL_DEBUG, lena::LOG_TARGET_ALL);
+#else
+	lena::Log::init(lena::LOG_LEVEL_WARNING, lena::LOG_TARGET_ALL);
+#endif
 
 	CTetrisDlg dlg;
 	m_pMainWnd = &dlg;

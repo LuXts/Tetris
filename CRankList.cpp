@@ -57,6 +57,7 @@ BOOL CRankList::OnInitDialog()
 	if (szBuffer) {
 		free(szBuffer);
 	}
+
 	if (_Score > 0) {
 		if (_ScoreList.size() == 0) {
 			_ScoreList.emplace_back(_Score);
@@ -174,6 +175,7 @@ BOOL CRankList::OnHelpInfo(HELPINFO* pHelpInfo)
 
 void CRankList::OnStnClickedExitMain()
 {
+	GameSDL::ButtonDownSound();
 	this->OnOK();
 	if (Globe.dlg != NULL) {
 		Globe.dlg->ShowWindow(SW_SHOWNORMAL);

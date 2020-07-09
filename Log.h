@@ -10,16 +10,25 @@
  */
 
 #include <string>
+
 #define LOG(level,x, ...)                                                   \
-    lena::Log::writeLog(level, __FILE__, __FUNCTION__, \
+    lena::Log::writeLog(level, __FILE__, __FUNCTION__,						\
                         __LINE__, x, __VA_ARGS__)
+
+#ifdef _DEBUG
+#define LOG_DEBUG(x,...)													\
+	lena::Log::writeLog(lena::LOG_LEVEL_DEBUG, __FILE__, __FUNCTION__,		\
+                        __LINE__, x, __VA_ARGS__)
+#else
+#define LOG_DEBUG(x,...)		0;
+#endif
 
 namespace lena {
 	// output level
 	enum LOGLEVEL {
 		LOG_LEVEL_NONE,
 		LOG_LEVEL_ERROR,
-		LOG_LEVEL_WANING,
+		LOG_LEVEL_WARNING,
 		LOG_LEVEL_INFO,
 		LOG_LEVEL_DEBUG
 	};

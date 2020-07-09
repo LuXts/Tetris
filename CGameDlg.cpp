@@ -59,11 +59,16 @@ BOOL CGameDlg::DestroyWindow()
 	Globe.KEY_RIGHT = FALSE;
 	Globe.KEY_PAUSE = FALSE;
 
+	GameSDL::ButtonDownSound();
+
 	KillTimer(17);
 	// TODO: 在此添加专用代码和/或调用基类
 	delete _Game;
 	delete _GProcess;
-	LOG(lena::LOG_LEVEL_DEBUG, "GameDlg Destroy!");
+	LOG_DEBUG("GameDlg Destroy!");
+	if (Globe.dlg != NULL) {
+		Globe.dlg->ShowWindow(SW_SHOWNORMAL);
+	}
 	return CDialogEx::DestroyWindow();
 }
 
@@ -80,7 +85,7 @@ BOOL CGameDlg::OnInitDialog()
 	CRect rect, rectClient;
 	GetWindowRect(rect);
 	GetClientRect(rectClient);
-	//LOG(lena::LOG_LEVEL_DEBUG, "Height: %d", GetSystemMetrics(SM_CYSIZE));
+	//LOG_DEBUG( "Height: %d", GetSystemMetrics(SM_CYSIZE));
 	SetWindowPos(NULL, 0, 0, 465, rect.Height() - rectClient.Height() + 600, SWP_NOMOVE);
 
 	_Game = new GameSDL(GameArea.GetSafeHwnd(), NextArea.GetSafeHwnd());
@@ -158,6 +163,7 @@ BOOL CGameDlg::PreTranslateMessage(MSG* pMsg)
 			return TRUE;
 		}
 		if (pMsg->wParam == VK_ESCAPE) {
+			GameSDL::ButtonDownSound();
 			KillTimer(17);
 			_Pause = true;
 			CPauseDlg Dlg(_GProcess->score, &_Exit);
@@ -187,7 +193,8 @@ void CGameDlg::OnTimer(UINT_PTR nIDEvent)
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
 	if (nIDEvent == 17) {
 		_Score.Format(_T("%d"), _GProcess->score);
-		_Diff.Format(_T("%d"), _GProcess->score / 1000 + 1);
+		int i = _GProcess->score / 1000;
+		_Diff.Format(_T("%d"), i < 7 ? i + 1 : 7);
 
 		UpdateData(FALSE);
 		if (_GProcess->Around()) {
