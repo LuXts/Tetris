@@ -30,7 +30,6 @@ void GameProcess::DrawMap(int x, int y, int type, int state, SingleSquare bcgSqu
 
 void GameProcess::DrawNext() {
 	GameDraw->NextRendererClear();
-	//TetrisManger.brickNext
 	GameDraw->NextAddBrick(2 + bricks[TetrisManger.brickNext][0].p[0].x, 2 + bricks[TetrisManger.brickNext][0].p[0].y);
 	GameDraw->NextAddBrick(2 + bricks[TetrisManger.brickNext][0].p[1].x, 2 + bricks[TetrisManger.brickNext][0].p[1].y);
 	GameDraw->NextAddBrick(2 + bricks[TetrisManger.brickNext][0].p[2].x, 2 + bricks[TetrisManger.brickNext][0].p[2].y);
@@ -96,23 +95,8 @@ BOOL GameProcess::Around() {
 		}
 		time_down_max = time_down_temp;
 	}
-
-	//n = n + 1;
-	//if (n == 30) {
 	if (time_down-- == 0) {
 		if (!TetrisManger.MoveDown()) {
-			/*
-			if (TetrisManger.TopCheck(TetrisManger.centre, bricks[TetrisManger.brickType][TetrisManger.brickState])) {
-				//x = 3;
-				//n = 0;
-				//DrawMap(-5, -5, 1, 1, TetrisManger.bcgSquare);
-				//return TRUE;
-			}                          //检测是否到顶端
-			*/
-			//x = 2;
-			//n = 0;
-			//DrawMap(-5, -5, 1, 1, TetrisManger.bcgSquare);
-			//return TRUE;
 			TetrisManger.FixBricks();
 			int temp = TetrisManger.RowCheck();
 			score = score + (temp * temp) * Singlescore * (1 + (double)score / 10000);
@@ -122,8 +106,6 @@ BOOL GameProcess::Around() {
 		}
 		time_down = time_down_max;
 	}
-	//}
-	//x = 1;
 	DrawMap(TetrisManger.centre.x, TetrisManger.centre.y, TetrisManger.brickType, TetrisManger.brickState, TetrisManger.bcgSquare);
 	return TetrisManger.TopCheck();
 }

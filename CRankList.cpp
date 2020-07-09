@@ -162,6 +162,11 @@ BOOL CRankList::PreTranslateMessage(MSG* pMsg)
 	if (pMsg->message == WM_KEYDOWN)
 	{
 		if (pMsg->wParam == VK_ESCAPE) {
+			OnStnClickedExitMain();
+			return TRUE;
+		}
+		if (pMsg->wParam == VK_RETURN) {
+			OnStnClickedExitMain();
 			return TRUE;
 		}
 	}

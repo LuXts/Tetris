@@ -7,12 +7,6 @@
 
 class CGameDlg : public CDialogEx
 {
-private:
-	bool _Pause;
-	bool _Exit;
-	GameSDL* _Game;
-	GameProcess* _GProcess;
-
 	DECLARE_DYNAMIC(CGameDlg)
 
 public:
@@ -41,10 +35,13 @@ public:
 	afx_msg BOOL OnHelpInfo(HELPINFO* pHelpInfo);
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
-private:
-	CString _Diff;
-public:
-	CString _Score;
 	afx_msg void OnPaint();
 	//	afx_msg void OnKillFocus(CWnd* pNewWnd);
+private:
+	bool _Pause;
+	bool _Exit;
+	GameSDL* _Game;
+	GameProcess* _GProcess;
+	CString _Diff;
+	CString _Score;
 };

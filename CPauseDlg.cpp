@@ -101,3 +101,19 @@ BOOL CPauseDlg::OnHelpInfo(HELPINFO* pHelpInfo)
 
 	return TRUE;
 }
+
+BOOL CPauseDlg::PreTranslateMessage(MSG* pMsg)
+{
+	if (pMsg->message == WM_KEYDOWN)
+	{
+		if (pMsg->wParam == VK_RETURN) {
+			OnStnClickedBackStatic();
+			return TRUE;
+		}
+		if (pMsg->wParam == VK_ESCAPE) {
+			OnStnClickedBackStatic();
+			return TRUE;
+		}
+	}
+	return CDialogEx::PreTranslateMessage(pMsg);
+}

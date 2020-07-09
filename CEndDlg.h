@@ -7,9 +7,6 @@ class CEndDlg : public CDialogEx
 {
 	DECLARE_DYNAMIC(CEndDlg)
 
-private:
-	int _Score;
-	CFont _font;
 public:
 	CEndDlg(int Score, CWnd* pParent = nullptr);   // 标准构造函数
 	virtual ~CEndDlg();
@@ -24,14 +21,16 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 private:
+	int _Score;
+	CFont _font;
+	CString _EndScoreStatic;
 	CStatic _OverStatic;
-	//	CStatic _End_Score;
+	CStaticEX _Rank_Button;
 public:
 	afx_msg void OnStnClickedRankButton();
 	afx_msg void OnPaint();
 	virtual BOOL OnInitDialog();
 	afx_msg BOOL OnHelpInfo(HELPINFO* pHelpInfo);
-	CString _EndScoreStatic;
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
-	CStaticEX _Rank_Button;
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
 };

@@ -91,3 +91,19 @@ HBRUSH CEndDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 	}
 	return hbr;
 }
+
+BOOL CEndDlg::PreTranslateMessage(MSG* pMsg)
+{
+	if (pMsg->message == WM_KEYDOWN)
+	{
+		if (pMsg->wParam == VK_RETURN) {
+			OnStnClickedRankButton();
+			return TRUE;
+		}
+		if (pMsg->wParam == VK_ESCAPE) {
+			OnStnClickedRankButton();
+			return TRUE;
+		}
+	}
+	return CDialogEx::PreTranslateMessage(pMsg);
+}

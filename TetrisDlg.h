@@ -26,15 +26,11 @@ protected:
 
 	// 生成的消息映射函数
 	virtual BOOL OnInitDialog();
-	//	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg BOOL OnHelpInfo(HELPINFO* pHelpInfo);
-	//	afx_msg void OnBnClickedStartButton();
-	//	afx_msg void OnBnClickedQuitButton();
-	//	afx_msg void OnBnClickedRankButton();
 	afx_msg void OnStnClickedStartButton();
 	afx_msg void OnStnClickedRankButton();
 	afx_msg void OnStnClickedExitButton();
@@ -44,4 +40,6 @@ private:
 	CStaticEX _Rank_Button;
 	CStaticEX _Quit_Button;
 	virtual void OnOK();
+public:
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
 };

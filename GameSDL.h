@@ -25,8 +25,6 @@ private:
 	int _Main_W, _Main_H;
 	int _Next_W, _Next_H;
 
-	static void DealMusic(int  channel);
-
 public:
 	// 创建游戏界面
 	GameSDL(void*, void*);
@@ -61,4 +59,6 @@ public:
 	static void ButtonHoverSound();
 
 	static void ButtonDownSound();
+
+	static void DealMusic(int  channel);
 };

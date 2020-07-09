@@ -85,7 +85,7 @@ BOOL CGameDlg::OnInitDialog()
 	CRect rect, rectClient;
 	GetWindowRect(rect);
 	GetClientRect(rectClient);
-	//LOG_DEBUG( "Height: %d", GetSystemMetrics(SM_CYSIZE));
+
 	SetWindowPos(NULL, 0, 0, 465, rect.Height() - rectClient.Height() + 600, SWP_NOMOVE);
 
 	_Game = new GameSDL(GameArea.GetSafeHwnd(), NextArea.GetSafeHwnd());
@@ -97,6 +97,7 @@ BOOL CGameDlg::OnInitDialog()
 
 	_Pause = false;
 	_Exit = false;
+
 	// TODO:  在此添加额外的初始化
 
 	return TRUE;  // return TRUE unless you set the focus to a control
@@ -106,22 +107,19 @@ BOOL CGameDlg::OnInitDialog()
 HBRUSH CGameDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
 	HBRUSH hbr = CDialogEx::OnCtlColor(pDC, pWnd, nCtlColor);
-	if (pWnd->GetDlgCtrlID() == IDC_GAME_WINDOW) {
+	auto i = pWnd->GetDlgCtrlID();
+	if (i == IDC_GAME_WINDOW || i == IDC_NEXT_BRICK_PIC) {
 		_Game->MainRendererPresent();
 	}
-	else if (pWnd->GetDlgCtrlID() == IDC_NEXT_BRICK_PIC) {
-		_Game->NextRendererPresent();
-	}
+
 	switch (nCtlColor)
 	{
-	case CTLCOLOR_STATIC: //对所有静态文本框的设置
+	case CTLCOLOR_STATIC:
 	{
 		pDC->SetBkMode(TRANSPARENT);
-		//设置背景为透明
-		pDC->SetTextColor(RGB(200, 200, 200)); //设置字体颜色
+		pDC->SetTextColor(RGB(200, 200, 200));
 		HBRUSH B = CreateSolidBrush(RGB(46, 50, 58));
-		//创建画刷
-		return (HBRUSH)B; //返回画刷句柄
+		return (HBRUSH)B;
 	}
 	}
 	// TODO:  在此更改 DC 的任何特性
@@ -132,8 +130,6 @@ HBRUSH CGameDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 
 BOOL CGameDlg::OnHelpInfo(HELPINFO* pHelpInfo)
 {
-	// TODO: 在此添加消息处理程序代码和/或调用默认值
-
 	return TRUE;
 }
 
@@ -173,6 +169,9 @@ BOOL CGameDlg::PreTranslateMessage(MSG* pMsg)
 			}
 			_Pause = false;
 			SetTimer(17, 10, NULL);
+			return TRUE;
+		}
+		if (pMsg->wParam == VK_RETURN) {
 			return TRUE;
 		}
 	}

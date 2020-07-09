@@ -162,3 +162,17 @@ void CTetrisDlg::OnOK()
 	GameSDL::EndBKMusic();
 	CDialogEx::OnOK();
 }
+
+BOOL CTetrisDlg::PreTranslateMessage(MSG* pMsg)
+{
+	if (pMsg->message == WM_KEYDOWN)
+	{
+		if (pMsg->wParam == VK_RETURN) {
+			return TRUE;
+		}
+		if (pMsg->wParam == VK_ESCAPE) {
+			return TRUE;
+		}
+	}
+	return CDialogEx::PreTranslateMessage(pMsg);
+}
